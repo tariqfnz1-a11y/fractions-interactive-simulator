@@ -3,4925 +3,1917 @@
 
 <head>
 
-<meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<meta name="description"
-content="Interactive  Fractions Mathematics Simulator">
-
-<title>
-Fractions Fun Lab |  Mathematics
-</title>
-
-
-<style>
-
-/* =========================================================
-   GLOBAL
-========================================================= */
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-html{
-    scroll-behavior:smooth;
-}
-
-body{
-
-    font-family:
-    "Segoe UI",
-    Arial,
-    sans-serif;
-
-    background:
-    linear-gradient(
-        135deg,
-        #eef2ff,
-        #fdf2f8,
-        #ecfeff
-    );
-
-    color:#172033;
-
-    min-height:100vh;
-}
-
-
-/* =========================================================
-   HEADER
-========================================================= */
-
-header{
-
-    background:
-    linear-gradient(
-        135deg,
-        #6d28d9,
-        #2563eb,
-        #0891b2
-    );
-
-    color:white;
-
-    padding:
-    35px 20px 45px;
-
-    text-align:center;
-
-    position:relative;
-
-    overflow:hidden;
-
-}
-
-header::before{
-
-    content:"";
-
-    position:absolute;
-
-    width:250px;
-
-    height:250px;
-
-    border-radius:50%;
-
-    background:
-    rgba(255,255,255,.12);
-
-    top:-100px;
-
-    left:-70px;
-
-}
-
-header::after{
-
-    content:"";
-
-    position:absolute;
-
-    width:300px;
-
-    height:300px;
-
-    border-radius:50%;
-
-    background:
-    rgba(255,255,255,.10);
-
-    right:-100px;
-
-    bottom:-150px;
-
-}
-
-.header-content{
-
-    position:relative;
-
-    z-index:2;
-
-}
-
-.logo{
-
-    font-size:4rem;
-
-    margin-bottom:5px;
-
-}
-
-header h1{
-
-    font-size:
-    clamp(
-        2rem,
-        6vw,
-        4rem
-    );
-
-    font-weight:800;
-
-    letter-spacing:-1px;
-
-}
-
-header p{
-
-    font-size:
-    clamp(
-        1rem,
-        2.5vw,
-        1.3rem
-    );
-
-    margin-top:8px;
-
-}
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-nav{
-
-    background:
-    rgba(17,24,39,.96);
-
-    display:flex;
-
-    flex-wrap:wrap;
-
-    justify-content:center;
-
-    gap:7px;
-
-    padding:10px;
-
-    position:sticky;
-
-    top:0;
-
-    z-index:1000;
-
-    box-shadow:
-    0 3px 15px rgba(0,0,0,.15);
-
-}
-
-nav button{
-
-    border:none;
-
-    color:white;
-
-    background:#374151;
-
-    padding:
-    10px 14px;
-
-    border-radius:10px;
-
-    cursor:pointer;
-
-    font-size:.9rem;
-
-    font-weight:600;
-
-    transition:.2s;
-
-}
-
-nav button:hover{
-
-    background:#7c3aed;
-
-    transform:
-    translateY(-2px);
-
-}
-
-nav button.active-nav{
-
-    background:#2563eb;
-
-}
-
-
-/* =========================================================
-   MAIN
-========================================================= */
-
-main{
-
-    max-width:1200px;
-
-    margin:auto;
-
-    padding:25px 18px 50px;
-
-}
-
-.section{
-
-    display:none;
-
-    animation:
-    fadeIn .35s ease;
-
-}
-
-.section.active{
-
-    display:block;
-
-}
-
-@keyframes fadeIn{
-
-    from{
-        opacity:0;
-        transform:translateY(10px);
-    }
-
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-
-}
-
-
-/* =========================================================
-   CARDS
-========================================================= */
-
-.card{
-
-    background:
-    rgba(255,255,255,.95);
-
-    border-radius:20px;
-
-    padding:25px;
-
-    margin-bottom:22px;
-
-    box-shadow:
-    0 10px 30px
-    rgba(31,41,55,.10);
-
-    border:
-    1px solid
-    rgba(255,255,255,.7);
-
-}
-
-.card h2{
-
-    color:#4c1d95;
-
-    margin-bottom:15px;
-
-    font-size:
-    clamp(
-        1.4rem,
-        4vw,
-        2rem
-    );
-
-}
-
-.card h3{
-
-    color:#1d4ed8;
-
-    margin:
-    18px 0 8px;
-
-}
-
-
-/* =========================================================
-   HOME DASHBOARD
-========================================================= */
-
-.welcome{
-
-    text-align:center;
-
-}
-
-.welcome h2{
-
-    color:#6d28d9;
-
-    font-size:2.2rem;
-
-}
-
-.welcome-text{
-
-    max-width:750px;
-
-    margin:
-    10px auto 25px;
-
-    font-size:1.05rem;
-
-}
-
-.learning-grid{
-
-    display:grid;
-
-    grid-template-columns:
-    repeat(
-        auto-fit,
-        minmax(210px,1fr)
-    );
-
-    gap:18px;
-
-}
-
-.learning-card{
-
-    border-radius:18px;
-
-    padding:22px;
-
-    color:white;
-
-    min-height:170px;
-
-    cursor:pointer;
-
-    transition:
-    transform .25s,
-    box-shadow .25s;
-
-}
-
-.learning-card:hover{
-
-    transform:
-    translateY(-7px)
-    scale(1.02);
-
-    box-shadow:
-    0 15px 30px
-    rgba(0,0,0,.15);
-
-}
-
-.learning-card .icon{
-
-    font-size:3rem;
-
-    margin-bottom:8px;
-
-}
-
-.learning-card h3{
-
-    color:white;
-
-    margin:0 0 5px;
-
-}
-
-.card-purple{
-    background:
-    linear-gradient(
-        135deg,
-        #7c3aed,
-        #a855f7
-    );
-}
-
-.card-blue{
-    background:
-    linear-gradient(
-        135deg,
-        #2563eb,
-        #06b6d4
-    );
-}
-
-.card-pink{
-    background:
-    linear-gradient(
-        135deg,
-        #db2777,
-        #f43f5e
-    );
-}
-
-.card-orange{
-    background:
-    linear-gradient(
-        135deg,
-        #ea580c,
-        #f59e0b
-    );
-}
-
-.card-green{
-    background:
-    linear-gradient(
-        135deg,
-        #059669,
-        #10b981
-    );
-}
-
-.card-indigo{
-    background:
-    linear-gradient(
-        135deg,
-        #4338ca,
-        #6366f1
-    );
-}
-
-
-/* =========================================================
-   HERO FRACTION
-========================================================= */
-
-.big-fraction{
-
-    display:inline-flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    font-size:3rem;
-
-    font-weight:800;
-
-    margin:10px;
-
-}
-
-.big-fraction .top{
-
-    padding:
-    0 18px 5px;
-
-    border-bottom:
-    4px solid #172033;
-
-}
-
-.big-fraction .bottom{
-
-    padding-top:5px;
-
-}
-
-
-/* =========================================================
-   BUTTONS
-========================================================= */
-
-.btn{
-
-    border:none;
-
-    padding:
-    12px 20px;
-
-    border-radius:12px;
-
-    cursor:pointer;
-
-    font-size:1rem;
-
-    font-weight:700;
-
-    color:white;
-
-    margin:5px;
-
-    transition:.2s;
-
-}
-
-.btn:hover{
-
-    transform:
-    translateY(-2px);
-
-    filter:
-    brightness(1.05);
-
-}
-
-.btn-purple{
-    background:#7c3aed;
-}
-
-.btn-blue{
-    background:#2563eb;
-}
-
-.btn-green{
-    background:#059669;
-}
-
-.btn-orange{
-    background:#ea580c;
-}
-
-.btn-pink{
-    background:#db2777;
-}
-
-.btn-gray{
-    background:#6b7280;
-}
-
-
-/* =========================================================
-   DEFINITION BOX
-========================================================= */
-
-.definition{
-
-    background:
-    linear-gradient(
-        135deg,
-        #eff6ff,
-        #f5f3ff
-    );
-
-    border-left:
-    6px solid #6366f1;
-
-    padding:18px;
-
-    border-radius:12px;
-
-    margin:
-    15px 0;
-
-}
-
-
-/* =========================================================
-   CONTROLS
-========================================================= */
-
-.control-grid{
-
-    display:grid;
-
-    grid-template-columns:
-    repeat(
-        auto-fit,
-        minmax(220px,1fr)
-    );
-
-    gap:18px;
-
-    margin:20px 0;
-
-}
-
-.control{
-
-    background:#f8fafc;
-
-    padding:18px;
-
-    border-radius:15px;
-
-    border:
-    2px solid #e2e8f0;
-
-}
-
-.control label{
-
-    display:block;
-
-    font-weight:700;
-
-    margin-bottom:8px;
-
-}
-
-input[type="number"],
-select{
-
-    width:100%;
-
-    padding:12px;
-
-    border:
-    2px solid #cbd5e1;
-
-    border-radius:10px;
-
-    font-size:1rem;
-
-}
-
-input[type="range"]{
-
-    width:100%;
-
-    accent-color:#7c3aed;
-
-    cursor:pointer;
-
-}
-
-
-/* =========================================================
-   FRACTION BAR
-========================================================= */
-
-.fraction-bar{
-
-    width:100%;
-
-    max-width:850px;
-
-    height:80px;
-
-    display:flex;
-
-    margin:
-    25px auto;
-
-    border:
-    4px solid #172033;
-
-    border-radius:12px;
-
-    overflow:hidden;
-
-    background:#e5e7eb;
-
-}
-
-.bar-piece{
-
-    flex:1;
-
-    border-right:
-    2px solid white;
-
-    background:#dbeafe;
-
-    transition:
-    background .3s;
-
-}
-
-.bar-piece.filled{
-
-    background:
-    linear-gradient(
-        135deg,
-        #7c3aed,
-        #2563eb
-    );
-
-}
-
-
-/* =========================================================
-   CIRCLE
-========================================================= */
-
-.circle-area{
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    min-height:280px;
-
-}
-
-.fraction-circle{
-
-    width:250px;
-
-    height:250px;
-
-    border-radius:50%;
-
-    position:relative;
-
-    overflow:hidden;
-
-    border:
-    5px solid #172033;
-
-    display:grid;
-
-}
-
-.circle-piece{
-
-    border:
-    1px solid white;
-
-    transition:.3s;
-
-}
-
-
-/* =========================================================
-   FRACTION DISPLAY
-========================================================= */
-
-.fraction{
-
-    display:inline-flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    vertical-align:middle;
-
-    font-size:2rem;
-
-    font-weight:800;
-
-    margin:
-    0 7px;
-
-}
-
-.fraction .top{
-
-    border-bottom:
-    3px solid #172033;
-
-    padding:
-    0 10px 4px;
-
-}
-
-.fraction .bottom{
-
-    padding-top:4px;
-
-}
-
-
-/* =========================================================
-   RESULT
-========================================================= */
-
-.result{
-
-    background:
-    linear-gradient(
-        135deg,
-        #ecfdf5,
-        #f0fdf4
-    );
-
-    border-left:
-    6px solid #10b981;
-
-    padding:18px;
-
-    border-radius:12px;
-
-    margin-top:18px;
-
-    font-size:1.05rem;
-
-}
-
-.highlight{
-
-    color:#7c3aed;
-
-    font-weight:800;
-
-}
-
-
-/* =========================================================
-   EQUIVALENT LAB
-========================================================= */
-
-.equivalent-display{
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    flex-wrap:wrap;
-
-    gap:15px;
-
-    margin:25px 0;
-
-}
-
-.equals{
-
-    font-size:2rem;
-
-    font-weight:bold;
-
-    color:#db2777;
-
-}
-
-
-/* =========================================================
-   COMPARISON
-========================================================= */
-
-.compare-area{
-
-    display:grid;
-
-    grid-template-columns:
-    1fr auto 1fr;
-
-    align-items:center;
-
-    gap:15px;
-
-    text-align:center;
-
-}
-
-.compare-box{
-
-    padding:25px;
-
-    border-radius:18px;
-
-    background:#f8fafc;
-
-    border:
-    3px solid #dbeafe;
-
-}
-
-.compare-symbol{
-
-    font-size:3rem;
-
-    font-weight:900;
-
-    color:#db2777;
-
-}
-
-
-/* =========================================================
-   NUMBER LINE
-========================================================= */
-
-.number-line{
-
-    height:180px;
-
-    position:relative;
-
-    margin:
-    20px auto;
-
-    max-width:900px;
-
-    background:
-    linear-gradient(
-        to bottom,
-        transparent 49%,
-        #2563eb 49%,
-        #2563eb 52%,
-        transparent 52%
-    );
-
-}
-
-.tick{
-
-    position:absolute;
-
-    top:40%;
-
-    width:4px;
-
-    height:40px;
-
-    background:#172033;
-
-}
-
-.tick-label{
-
-    position:absolute;
-
-    top:65%;
-
-    transform:
-    translateX(-50%);
-
-    font-weight:700;
-
-}
-
-.number-marker{
-
-    position:absolute;
-
-    top:30%;
-
-    width:25px;
-
-    height:25px;
-
-    border-radius:50%;
-
-    background:#ef4444;
-
-    border:
-    4px solid white;
-
-    box-shadow:
-    0 3px 10px rgba(0,0,0,.3);
-
-    transform:
-    translateX(-50%);
-
-    animation:
-    bounceMarker .8s ease;
-
-}
-
-@keyframes bounceMarker{
-
-    0%{
-        transform:
-        translateX(-50%)
-        scale(.3);
-    }
-
-    70%{
-        transform:
-        translateX(-50%)
-        scale(1.2);
-    }
-
-    100%{
-        transform:
-        translateX(-50%)
-        scale(1);
-    }
-
-}
-
-
-/* =========================================================
-   TABLE
-========================================================= */
-
-.table-wrapper{
-
-    overflow-x:auto;
-
-}
-
-table{
-
-    width:100%;
-
-    border-collapse:collapse;
-
-    margin-top:15px;
-
-}
-
-th,
-td{
-
-    padding:12px;
-
-    border:
-    1px solid #d1d5db;
-
-    text-align:center;
-
-}
-
-th{
-
-    background:#6d28d9;
-
-    color:white;
-
-}
-
-tr:nth-child(even){
-
-    background:#f8fafc;
-
-}
-
-
-/* =========================================================
-   MATCHING GAME
-========================================================= */
-
-.match-grid{
-
-    display:grid;
-
-    grid-template-columns:
-    repeat(
-        auto-fit,
-        minmax(130px,1fr)
-    );
-
-    gap:15px;
-
-    margin-top:20px;
-
-}
-
-.match-card{
-
-    height:120px;
-
-    border-radius:16px;
-
-    border:none;
-
-    background:
-    linear-gradient(
-        135deg,
-        #6366f1,
-        #8b5cf6
-    );
-
-    color:white;
-
-    font-size:1.3rem;
-
-    font-weight:800;
-
-    cursor:pointer;
-
-    box-shadow:
-    0 6px 15px
-    rgba(0,0,0,.12);
-
-    transition:.2s;
-
-}
-
-.match-card:hover{
-
-    transform:
-    translateY(-4px);
-
-}
-
-.match-card.correct{
-
-    background:
-    linear-gradient(
-        135deg,
-        #059669,
-        #10b981
-    );
-
-}
-
-.match-card.wrong{
-
-    background:
-    linear-gradient(
-        135deg,
-        #dc2626,
-        #f43f5e
-    );
-
-}
-
-.match-card.hidden-card{
-
-    visibility:hidden;
-
-}
-
-
-/* =========================================================
-   QUIZ
-========================================================= */
-
-.quiz-header{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    flex-wrap:wrap;
-
-    gap:10px;
-
-    align-items:center;
-
-    margin-bottom:15px;
-
-}
-
-.score-badge{
-
-    background:
-    linear-gradient(
-        135deg,
-        #f59e0b,
-        #ea580c
-    );
-
-    color:white;
-
-    padding:
-    10px 18px;
-
-    border-radius:30px;
-
-    font-weight:800;
-
-}
-
-.progress-container{
-
-    width:100%;
-
-    height:14px;
-
-    background:#e5e7eb;
-
-    border-radius:20px;
-
-    overflow:hidden;
-
-    margin:15px 0 25px;
-
-}
-
-.progress-bar{
-
-    height:100%;
-
-    width:0%;
-
-    background:
-    linear-gradient(
-        90deg,
-        #7c3aed,
-        #2563eb,
-        #06b6d4
-    );
-
-    transition:.3s;
-
-}
-
-.quiz-question{
-
-    background:#f8fafc;
-
-    padding:20px;
-
-    border-radius:16px;
-
-    margin-bottom:18px;
-
-    border:
-    2px solid #e2e8f0;
-
-}
-
-.quiz-question h3{
-
-    color:#172033;
-
-    margin-top:0;
-
-}
-
-.option{
-
-    display:block;
-
-    padding:12px;
-
-    margin:8px 0;
-
-    background:white;
-
-    border:
-    2px solid #e5e7eb;
-
-    border-radius:10px;
-
-    cursor:pointer;
-
-    transition:.2s;
-
-}
-
-.option:hover{
-
-    border-color:#8b5cf6;
-
-    background:#f5f3ff;
-
-}
-
-.option input{
-
-    width:auto;
-
-    margin-right:8px;
-
-}
-
-.quiz-feedback{
-
-    margin-top:8px;
-
-    font-weight:700;
-
-}
-
-.correct-answer{
-
-    color:#059669;
-
-}
-
-.wrong-answer{
-
-    color:#dc2626;
-
-}
-
-
-/* =========================================================
-   QUIZ RESULT
-========================================================= */
-
-.final-score{
-
-    display:none;
-
-    text-align:center;
-
-    padding:30px;
-
-    border-radius:20px;
-
-    margin-top:20px;
-
-    background:
-    linear-gradient(
-        135deg,
-        #fef3c7,
-        #fce7f3,
-        #ede9fe
-    );
-
-}
-
-.final-score h2{
-
-    color:#7c3aed;
-
-}
-
-.score-number{
-
-    font-size:4rem;
-
-    font-weight:900;
-
-    color:#ea580c;
-
-}
-
-
-/* =========================================================
-   NOTES
-========================================================= */
-
-.notes-list{
-
-    padding-left:22px;
-
-}
-
-.notes-list li{
-
-    margin:
-    10px 0;
-
-}
-
-.example-box{
-
-    background:#fff7ed;
-
-    border:
-    2px solid #fdba74;
-
-    border-radius:15px;
-
-    padding:18px;
-
-    margin:15px 0;
-
-}
-
-
-/* =========================================================
-   CONFETTI
-========================================================= */
-
-.confetti{
-
-    position:fixed;
-
-    top:-20px;
-
-    width:12px;
-
-    height:18px;
-
-    z-index:9999;
-
-    animation:
-    fall 3s linear forwards;
-
-}
-
-@keyframes fall{
-
-    to{
-
-        transform:
-        translateY(110vh)
-        rotate(720deg);
-
-        opacity:0;
-
-    }
-
-}
-
-
-/* =========================================================
-   FOOTER
-========================================================= */
-
-footer{
-
-    background:#111827;
-
-    color:white;
-
-    text-align:center;
-
-    padding:30px 15px;
-
-}
-
-footer strong{
-
-    color:#a78bfa;
-
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media(max-width:700px){
-
-    main{
-
-        padding:
-        15px 10px 40px;
-
-    }
-
-    .card{
-
-        padding:18px;
-
-    }
-
-    nav button{
-
-        flex:
-        1 1 30%;
-
-        font-size:.78rem;
-
-        padding:9px 7px;
-
-    }
-
-    .logo{
-
-        font-size:3rem;
-
-    }
-
-    .fraction-bar{
-
-        height:60px;
-
-    }
-
-    .fraction-circle{
-
-        width:200px;
-
-        height:200px;
-
-    }
-
-    .compare-area{
-
-        grid-template-columns:1fr;
-
-    }
-
-    .compare-symbol{
-
-        font-size:2.3rem;
-
-    }
-
-    .big-fraction{
-
-        font-size:2.4rem;
-
-    }
-
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interactive Fractions Mathematics Simulator">
+    <title>Fractions Fun Lab | Mathematics</title>
+
+    <style>
+        /* =========================================================
+           GLOBAL
+        ========================================================= */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg, #eef2ff, #fdf2f8, #ecfeff);
+            color: #172033;
+            min-height: 100vh;
+        }
+
+        /* =========================================================
+           HEADER
+        ========================================================= */
+        header {
+            background: linear-gradient(135deg, #6d28d9, #2563eb, #0891b2);
+            color: white;
+            padding: 35px 20px 45px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .12);
+            top: -100px;
+            left: -70px;
+        }
+
+        header::after {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .10);
+            right: -100px;
+            bottom: -150px;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo {
+            font-size: 4rem;
+            margin-bottom: 5px;
+        }
+
+        header h1 {
+            font-size: clamp(2rem, 6vw, 4rem);
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        header p {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            margin-top: 8px;
+        }
+
+        /* =========================================================
+           NAVIGATION
+        ========================================================= */
+        nav {
+            background: rgba(17, 24, 39, .96);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 7px;
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, .15);
+        }
+
+        nav button {
+            border: none;
+            color: white;
+            background: #374151;
+            padding: 10px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: .9rem;
+            font-weight: 600;
+            transition: .2s;
+        }
+
+        nav button:hover {
+            background: #7c3aed;
+            transform: translateY(-2px);
+        }
+
+        nav button.active-nav {
+            background: #2563eb;
+        }
+
+        /* =========================================================
+           MAIN
+        ========================================================= */
+        main {
+            max-width: 1200px;
+            margin: auto;
+            padding: 25px 18px 50px;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn .35s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =========================================================
+           CARDS
+        ========================================================= */
+        .card {
+            background: rgba(255, 255, 255, .95);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 22px;
+            box-shadow: 0 10px 30px rgba(31, 41, 55, .10);
+            border: 1px solid rgba(255, 255, 255, .7);
+        }
+
+        .card h2 {
+            color: #4c1d95;
+            margin-bottom: 15px;
+            font-size: clamp(1.4rem, 4vw, 2rem);
+        }
+
+        .card h3 {
+            color: #1d4ed8;
+            margin: 18px 0 8px;
+        }
+
+        /* =========================================================
+           HOME DASHBOARD
+        ========================================================= */
+        .welcome {
+            text-align: center;
+        }
+
+        .welcome h2 {
+            color: #6d28d9;
+            font-size: 2.2rem;
+        }
+
+        .welcome-text {
+            max-width: 750px;
+            margin: 10px auto 25px;
+            font-size: 1.05rem;
+        }
+
+        .learning-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 18px;
+        }
+
+        .learning-card {
+            border-radius: 18px;
+            padding: 22px;
+            color: white;
+            min-height: 170px;
+            cursor: pointer;
+            transition: transform .25s, box-shadow .25s;
+        }
+
+        .learning-card:hover {
+            transform: translateY(-7px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, .15);
+        }
+
+        .learning-card .icon {
+            font-size: 3rem;
+            margin-bottom: 8px;
+        }
+
+        .learning-card h3 {
+            color: white;
+            margin: 0 0 5px;
+        }
+
+        .card-purple {
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+        }
+        .card-blue {
+            background: linear-gradient(135deg, #2563eb, #06b6d4);
+        }
+        .card-pink {
+            background: linear-gradient(135deg, #db2777, #f43f5e);
+        }
+        .card-orange {
+            background: linear-gradient(135deg, #ea580c, #f59e0b);
+        }
+        .card-green {
+            background: linear-gradient(135deg, #059669, #10b981);
+        }
+        .card-indigo {
+            background: linear-gradient(135deg, #4338ca, #6366f1);
+        }
+
+        /* =========================================================
+           BIG FRACTION
+        ========================================================= */
+        .big-fraction {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 10px;
+        }
+
+        .big-fraction .top {
+            padding: 0 18px 5px;
+            border-bottom: 4px solid #172033;
+        }
+
+        .big-fraction .bottom {
+            padding-top: 5px;
+        }
+
+        /* =========================================================
+           BUTTONS
+        ========================================================= */
+        .btn {
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 700;
+            color: white;
+            margin: 5px;
+            transition: .2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+        }
+
+        .btn-purple {
+            background: #7c3aed;
+        }
+        .btn-blue {
+            background: #2563eb;
+        }
+        .btn-green {
+            background: #059669;
+        }
+        .btn-orange {
+            background: #ea580c;
+        }
+        .btn-pink {
+            background: #db2777;
+        }
+        .btn-gray {
+            background: #6b7280;
+        }
+
+        /* =========================================================
+           DEFINITION BOX
+        ========================================================= */
+        .definition {
+            background: linear-gradient(135deg, #eff6ff, #f5f3ff);
+            border-left: 6px solid #6366f1;
+            padding: 18px;
+            border-radius: 12px;
+            margin: 15px 0;
+        }
+
+        /* =========================================================
+           CONTROLS
+        ========================================================= */
+        .control-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            margin: 20px 0;
+        }
+
+        .control {
+            background: #f8fafc;
+            padding: 18px;
+            border-radius: 15px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .control label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: #7c3aed;
+            cursor: pointer;
+        }
+
+        /* =========================================================
+           FRACTION BAR — IMPROPER FRACTION FIX
+        ========================================================= */
+        .fraction-bar {
+            width: 100%;
+            max-width: 850px;
+            margin: 25px auto;
+            border-radius: 12px;
+            background: #f1f5f9;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            border: 2px solid #cbd5e1;
+            min-height: 60px;
+        }
+
+        .bar-row {
+            display: flex;
+            width: 100%;
+            height: 44px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid #172033;
+            background: #e5e7eb;
+        }
+
+        .bar-piece {
+            flex: 1;
+            border-right: 1px solid white;
+            transition: background .3s;
+            background: #dbeafe;
+        }
+
+        .bar-piece:last-child {
+            border-right: none;
+        }
+
+        .bar-piece.filled {
+            background: linear-gradient(135deg, #7c3aed, #2563eb);
+        }
+
+        .bar-row-label {
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #4c1d95;
+            margin-top: -2px;
+            letter-spacing: 0.3px;
+        }
+
+        /* =========================================================
+           CIRCLE — IMPROPER FRACTION FIX
+        ========================================================= */
+        .circle-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            min-height: 280px;
+            padding: 10px 0;
+        }
+
+        .circle-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .circle-group-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #4c1d95;
+            text-align: center;
+        }
+
+        .fraction-circle {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            border: 4px solid #172033;
+            display: grid;
+            background: #e5e7eb;
+            flex-shrink: 0;
+        }
+
+        .fraction-circle .circle-piece {
+            border: 1px solid white;
+            transition: background .3s;
+            background: #dbeafe;
+        }
+
+        .fraction-circle .circle-piece.filled {
+            background: linear-gradient(135deg, #7c3aed, #2563eb);
+        }
+
+        /* =========================================================
+           FRACTION DISPLAY
+        ========================================================= */
+        .fraction {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            vertical-align: middle;
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 0 7px;
+        }
+
+        .fraction .top {
+            border-bottom: 3px solid #172033;
+            padding: 0 10px 4px;
+        }
+
+        .fraction .bottom {
+            padding-top: 4px;
+        }
+
+        /* =========================================================
+           RESULT
+        ========================================================= */
+        .result {
+            background: linear-gradient(135deg, #ecfdf5, #f0fdf4);
+            border-left: 6px solid #10b981;
+            padding: 18px;
+            border-radius: 12px;
+            margin-top: 18px;
+            font-size: 1.05rem;
+        }
+
+        .highlight {
+            color: #7c3aed;
+            font-weight: 800;
+        }
+
+        /* =========================================================
+           EQUIVALENT LAB
+        ========================================================= */
+        .equivalent-display {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .equals {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #db2777;
+        }
+
+        /* =========================================================
+           COMPARISON
+        ========================================================= */
+        .compare-area {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 15px;
+            text-align: center;
+        }
+
+        .compare-box {
+            padding: 25px;
+            border-radius: 18px;
+            background: #f8fafc;
+            border: 3px solid #dbeafe;
+        }
+
+        .compare-symbol {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #db2777;
+        }
+
+        /* =========================================================
+           NUMBER LINE
+        ========================================================= */
+        .number-line {
+            height: 180px;
+            position: relative;
+            margin: 20px auto;
+            max-width: 900px;
+            background: linear-gradient(to bottom, transparent 49%, #2563eb 49%, #2563eb 52%, transparent 52%);
+        }
+
+        .tick {
+            position: absolute;
+            top: 40%;
+            width: 4px;
+            height: 40px;
+            background: #172033;
+        }
+
+        .tick-label {
+            position: absolute;
+            top: 65%;
+            transform: translateX(-50%);
+            font-weight: 700;
+        }
+
+        .number-marker {
+            position: absolute;
+            top: 30%;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #ef4444;
+            border: 4px solid white;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, .3);
+            transform: translateX(-50%);
+            animation: bounceMarker .8s ease;
+        }
+
+        @keyframes bounceMarker {
+            0% {
+                transform: translateX(-50%) scale(.3);
+            }
+            70% {
+                transform: translateX(-50%) scale(1.2);
+            }
+            100% {
+                transform: translateX(-50%) scale(1);
+            }
+        }
+
+        /* =========================================================
+           TABLE
+        ========================================================= */
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            text-align: center;
+        }
+
+        th {
+            background: #6d28d9;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        /* =========================================================
+           MATCHING GAME
+        ========================================================= */
+        .match-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .match-card {
+            height: 120px;
+            border-radius: 16px;
+            border: none;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, .12);
+            transition: .2s;
+        }
+
+        .match-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .match-card.correct {
+            background: linear-gradient(135deg, #059669, #10b981);
+        }
+
+        .match-card.wrong {
+            background: linear-gradient(135deg, #dc2626, #f43f5e);
+        }
+
+        .match-card.hidden-card {
+            visibility: hidden;
+        }
+
+        /* =========================================================
+           QUIZ
+        ========================================================= */
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .score-badge {
+            background: linear-gradient(135deg, #f59e0b, #ea580c);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 30px;
+            font-weight: 800;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 14px;
+            background: #e5e7eb;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 15px 0 25px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #7c3aed, #2563eb, #06b6d4);
+            transition: .3s;
+        }
+
+        .quiz-question {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 18px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .quiz-question h3 {
+            color: #172033;
+            margin-top: 0;
+        }
+
+        .option {
+            display: block;
+            padding: 12px;
+            margin: 8px 0;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .option:hover {
+            border-color: #8b5cf6;
+            background: #f5f3ff;
+        }
+
+        .option input {
+            width: auto;
+            margin-right: 8px;
+        }
+
+        .quiz-feedback {
+            margin-top: 8px;
+            font-weight: 700;
+        }
+
+        .correct-answer {
+            color: #059669;
+        }
+
+        .wrong-answer {
+            color: #dc2626;
+        }
+
+        /* =========================================================
+           QUIZ RESULT
+        ========================================================= */
+        .final-score {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            border-radius: 20px;
+            margin-top: 20px;
+            background: linear-gradient(135deg, #fef3c7, #fce7f3, #ede9fe);
+        }
+
+        .final-score h2 {
+            color: #7c3aed;
+        }
+
+        .score-number {
+            font-size: 4rem;
+            font-weight: 900;
+            color: #ea580c;
+        }
+
+        /* =========================================================
+           NOTES
+        ========================================================= */
+        .notes-list {
+            padding-left: 22px;
+        }
+
+        .notes-list li {
+            margin: 10px 0;
+        }
+
+        .example-box {
+            background: #fff7ed;
+            border: 2px solid #fdba74;
+            border-radius: 15px;
+            padding: 18px;
+            margin: 15px 0;
+        }
+
+        /* =========================================================
+           CONFETTI
+        ========================================================= */
+        .confetti {
+            position: fixed;
+            top: -20px;
+            width: 12px;
+            height: 18px;
+            z-index: 9999;
+            animation: fall 3s linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+        footer {
+            background: #111827;
+            color: white;
+            text-align: center;
+            padding: 30px 15px;
+        }
+
+        footer strong {
+            color: #a78bfa;
+        }
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+        @media (max-width: 700px) {
+            main {
+                padding: 15px 10px 40px;
+            }
+            .card {
+                padding: 18px;
+            }
+            nav button {
+                flex: 1 1 30%;
+                font-size: .78rem;
+                padding: 9px 7px;
+            }
+            .logo {
+                font-size: 3rem;
+            }
+            .fraction-circle {
+                width: 110px;
+                height: 110px;
+            }
+            .circle-area {
+                gap: 12px;
+                min-height: 200px;
+            }
+            .bar-row {
+                height: 34px;
+            }
+            .compare-area {
+                grid-template-columns: 1fr;
+            }
+            .compare-symbol {
+                font-size: 2.3rem;
+            }
+            .big-fraction {
+                font-size: 2.4rem;
+            }
+            .fraction-bar {
+                padding: 6px;
+                gap: 4px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .fraction-circle {
+                width: 80px;
+                height: 80px;
+            }
+            .bar-row {
+                height: 28px;
+            }
+            .circle-area {
+                gap: 8px;
+            }
+            .circle-group-label {
+                font-size: 0.6rem;
+            }
+            .bar-row-label {
+                font-size: 0.6rem;
+            }
+        }
+    </style>
 
 </head>
 
-
 <body>
 
-
-<!-- =========================================================
-HEADER
-========================================================= -->
-
-<header>
-
-<div class="header-content">
-
-<div class="logo">
-➗
-</div>
-
-<h1>
-Fractions Fun Lab
-</h1>
-
-<p>
- Mathematics • Explore • Play • Learn
-</p>
-
-</div>
-
-</header>
-
-
-<!-- =========================================================
-NAVIGATION
-========================================================= -->
-
-<nav id="mainNav">
-
-<button
-onclick="showSection('home',this)"
-class="active-nav"
->
-🏠 Home
-</button>
-
-<button
-onclick="showSection('notes',this)"
->
-📘 Notes
-</button>
-
-<button
-onclick="showSection('explorer',this)"
->
-🍕 Explore
-</button>
-
-<button
-onclick="showSection('types',this)"
->
-🔎 Types
-</button>
-
-<button
-onclick="showSection('equivalent',this)"
->
-🔄 Equivalent
-</button>
-
-<button
-onclick="showSection('compare',this)"
->
-⚖️ Compare
-</button>
-
-<button
-onclick="showSection('operations',this)"
->
-➕ Operations
-</button>
-
-<button
-onclick="showSection('game',this)"
->
-🧩 Game
-</button>
-
-<button
-onclick="showSection('quiz',this)"
->
-🏆 Quiz
-</button>
-
-</nav>
-
-
-<main>
-
-
-<!-- =========================================================
-HOME
-========================================================= -->
-
-<section
-id="home"
-class="section active"
->
-
-<div class="card welcome">
-
-<h2>
-👋 Welcome to the Fractions Fun Lab!
-</h2>
-
-<p class="welcome-text">
-
-Fractions become easier when you can
-<strong>see them, change them and play with them.</strong>
-
-Choose a learning activity below.
-
-</p>
-
-
-<div class="learning-grid">
-
-
-<div
-class="learning-card card-purple"
-onclick="goTo('explorer')"
->
-
-<div class="icon">
-🍕
-</div>
-
-<h3>
-Fraction Explorer
-</h3>
-
-<p>
-Build fractions and see them visually.
-</p>
-
-</div>
-
-
-<div
-class="learning-card card-blue"
-onclick="goTo('equivalent')"
->
-
-<div class="icon">
-🔄
-</div>
-
-<h3>
-Equivalent Fractions
-</h3>
-
-<p>
-Discover fractions with the same value.
-</p>
-
-</div>
-
-
-<div
-class="learning-card card-pink"
-onclick="goTo('compare')"
->
-
-<div class="icon">
-⚖️
-</div>
-
-<h3>
-Compare Fractions
-</h3>
-
-<p>
-Find which fraction is greater.
-</p>
-
-</div>
-
-
-<div
-class="learning-card card-orange"
-onclick="goTo('operations')"
->
-
-<div class="icon">
-➕
-</div>
-
-<h3>
-Operations
-</h3>
-
-<p>
-Add and subtract fractions.
-</p>
-
-</div>
-
-
-<div
-class="learning-card card-green"
-onclick="goTo('game')"
->
-
-<div class="icon">
-🧩
-</div>
-
-<h3>
-Matching Game
-</h3>
-
-<p>
-Match equivalent fractions.
-</p>
-
-</div>
-
-
-<div
-class="learning-card card-indigo"
-onclick="goTo('quiz')"
->
-
-<div class="icon">
-🏆
-</div>
-
-<h3>
-15-MCQ Challenge
-</h3>
-
-<p>
-Test what you have learned.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="card">
-
-<h2>
-🎯 Learning Targets
-</h2>
-
-<ul class="notes-list">
-
-<li>
-Identify numerator and denominator.
-</li>
-
-<li>
-Recognise proper and improper fractions.
-</li>
-
-<li>
-Understand equivalent fractions.
-</li>
-
-<li>
-Compare fractions.
-</li>
-
-<li>
-Add and subtract fractions with the same denominator.
-</li>
-
-<li>
-Convert fractions to decimals and percentages.
-</li>
-
-</ul>
-
-</div>
-
-</section>
-
-
-<!-- =========================================================
-NOTES
-========================================================= -->
-
-<section
-id="notes"
-class="section"
->
-
-<div class="card">
-
-<h2>
-📘 Fraction Study Notes
-</h2>
-
-
-<div class="definition">
-
-<strong>
-A fraction represents part of a whole.
-</strong>
-
-For example,
-
-<span class="fraction">
-<span class="top">3</span>
-<span class="bottom">4</span>
-</span>
-
-means 3 equal parts out of 4 equal parts.
-
-</div>
-
-
-<h3>
-🔵 Numerator
-</h3>
-
-<p>
-
-The numerator is the
-<strong>top number</strong>.
-
-It tells us how many parts
-are being considered.
-
-</p>
-
-
-<h3>
-🟣 Denominator
-</h3>
-
-<p>
-
-The denominator is the
-<strong>bottom number</strong>.
-
-It tells us how many equal parts
-make the whole.
-
-</p>
-
-
-<div class="example-box">
-
-<strong>
-Example:
-</strong>
-
-<span class="fraction">
-<span class="top">5</span>
-<span class="bottom">8</span>
-</span>
-
-<br>
-
-Numerator = 5
-
-<br>
-
-Denominator = 8
-
-</div>
-
-
-<h3>
-🌟 Types of Fractions
-</h3>
-
-<div class="table-wrapper">
-
-<table>
-
-<tr>
-<th>Type</th>
-<th>Example</th>
-<th>Rule</th>
-</tr>
-
-<tr>
-<td>Proper</td>
-<td>3/7</td>
-<td>Numerator &lt; Denominator</td>
-</tr>
-
-<tr>
-<td>Improper</td>
-<td>9/4</td>
-<td>Numerator ≥ Denominator</td>
-</tr>
-
-<tr>
-<td>Mixed Number</td>
-<td>2 1/4</td>
-<td>Whole number + fraction</td>
-</tr>
-
-</table>
-
-</div>
-
-
-<h3>
-🔄 Equivalent Fractions
-</h3>
-
-<p>
-
-Equivalent fractions have exactly
-the same value.
-
-</p>
-
-<div class="definition">
-
-1/2 = 2/4 = 3/6 = 4/8
-
-</div>
-
-
-<p>
-
-Multiply or divide the numerator and
-denominator by the same non-zero number.
-
-</p>
-
-
-<h3>
-⚖️ Comparing Fractions
-</h3>
-
-<ul class="notes-list">
-
-<li>
-If denominators are the same,
-compare the numerators.
-</li>
-
-<li>
-For different denominators,
-convert them into equivalent fractions
-or use cross multiplication.
-</li>
-
-</ul>
-
-
-<h3>
-➕ Adding Fractions
-</h3>
-
-<div class="definition">
-
-When denominators are the same:
-
-<br><br>
-
-2/7 + 3/7 = 5/7
-
-</div>
-
-
-<h3>
-➖ Subtracting Fractions
-</h3>
-
-<div class="definition">
-
-5/8 − 2/8 = 3/8
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- =========================================================
-EXPLORER
-========================================================= -->
-
-<section
-id="explorer"
-class="section"
->
-
-<div class="card">
-
-<h2>
-🍕 Interactive Fraction Explorer
-</h2>
-
-<p>
-Move the sliders and watch the fraction change!
-</p>
-
-
-<div class="control-grid">
-
-
-<div class="control">
-
-<label>
-Numerator:
-<span
-id="numValue"
-class="highlight"
->
-3
-</span>
-</label>
-
-<input
-id="numSlider"
-type="range"
-min="0"
-max="12"
-value="3"
-oninput="updateExplorer()"
->
-
-</div>
-
-
-<div class="control">
-
-<label>
-Denominator:
-<span
-id="denValue"
-class="highlight"
->
-5
-</span>
-</label>
-
-<input
-id="denSlider"
-type="range"
-min="1"
-max="12"
-value="5"
-oninput="updateExplorer()"
->
-
-</div>
-
-</div>
-
-
-<div style="text-align:center">
-
-<div
-id="explorerFraction"
-class="big-fraction"
->
-</div>
-
-</div>
-
-
-<div
-id="fractionBar"
-class="fraction-bar"
->
-</div>
-
-
-<div
-id="circleArea"
-class="circle-area"
->
-</div>
-
-
-<div
-id="explorerResult"
-class="result"
->
-</div>
-
-</div>
-
-</section>
-
-
-<!-- =========================================================
-TYPES
-========================================================= -->
-
-<section
-id="types"
-class="section"
->
-
-<div class="card">
-
-<h2>
-🔎 Fraction Type Detector
-</h2>
-
-<p>
-Enter a fraction and let the simulator identify it.
-</p>
-
-
-<div class="control-grid">
-
-<div class="control">
-
-<label>
-Numerator
-</label>
-
-<input
-id="typeN"
-type="number"
-min="0"
-value="7"
->
-
-</div>
-
-
-<div class="control">
-
-<label>
-Denominator
-</label>
-
-<input
-id="typeD"
-type="number"
-min="1"
-value="4"
->
-
-</div>
-
-</div>
-
-
-<button
-class="btn btn-purple"
-onclick="detectType()"
->
-🔍 Identify Fraction
-</button>
-
-
-<div
-id="typeResult"
-class="result"
->
-Enter a fraction and click Identify.
-</div>
-
-</div>
-
-
-<div class="card">
-
-<h2>
-🔀 Mixed Number → Improper Fraction
-</h2>
-
-<div class="control-grid">
-
-<div class="control">
-
-<label>
-Whole Number
-</label>
-
-<input
-id="mixedWhole"
-type="number"
-value="2"
-min="0"
->
-
-</div>
-
-<div class="control">
-
-<label>
-Numerator
-</label>
-
-<input
-id="mixedN"
-type="number"
-value="3"
-min="0"
->
-
-</div>
-
-<div class="control">
-
-<label>
-Denominator
-</label>
-
-<input
-id="mixedD"
-type="number"
-value="4"
-min="1"
->
-
-</div>
-
-</div>
-
-
-<button
-class="btn btn-blue"
-onclick="mixedConvert()"
->
-🔄 Convert
-</button>
-
-
-<div
-id="mixedResult"
-class="result"
->
-</div>
-
-</div>
-
-</section>
-
-
-<!-- =========================================================
-EQUIVALENT
-========================================================= -->
-
-<section
-id="equivalent"
-class="section"
->
-
-<div class="card">
-
-<h2>
-🔄 Equivalent Fraction Lab
-</h2>
-
-<p>
-Choose a fraction and multiply both numbers
-by the same value.
-</p>
-
-
-<div class="control-grid">
-
-<div class="control">
-
-<label>
-Numerator
-</label>
-
-<input
-id="eqN"
-type="number"
-min="0"
-value="1"
->
-
-</div>
-
-<div class="control">
-
-<label>
-Denominator
-</label>
-
-<input
-id="eqD"
-type="number"
-min="1"
-value="2"
->
-
-</div>
-
-<div class="control">
-
-<label>
-Multiplier
-
-<span
-id="multiplierValue"
-class="highlight"
->
-2
-</span>
-
-</label>
-
-<input
-id="multiplier"
-type="range"
-min="1"
-max="8"
-value="2"
-oninput="
-document.getElementById('multiplierValue').textContent=this.value;
-generateEquivalent();
-"
->
-
-</div>
-
-</div>
-
-
-<div
-id="equivalentDisplay"
-class="equivalent-display"
->
-</div>
-
-
-<div
-id="equivalentVisual"
-class="fraction-bar"
->
-</div>
-
-
-<div
-id="equivalentResult"
-class="result"
->
-</div>
-
-</div>
-
-</section>
-
-
-<!-- =========================================================
-COMPARE
-========================================================= -->
-
-<section
-id="compare"
-class="section"
->
-
-<div class="card">
-
-<h2>
-⚖️ Fraction Battle
-</h2>
-
-<p>
-Which fraction is greater?
-</p>
-
-
-<div class="control-grid">
-
-<div class="control">
-
-<label>
-First Fraction
-</label>
-
-<input
-id="cmpN1"
-type="number"
-min="0"
-value="2"
->
-
-/
-
-<input
-id="cmpD1"
-type="number"
-min="1"
-value="3"
->
-
-</div>
-
-
-<div class="control">
-
-<label>
-Second Fraction
-</label>
-
-<input
-id="cmpN2"
-type="number"
-min="0"
-value="3"
->
-
-/
-
-<input
-id="cmpD2"
-type="number"
-min="1"
-value="5"
->
-
-</div>
-
-</div>
-
-
-<button
-class="btn btn-pink"
-onclick="compare()"
->
-⚔️ Compare
-</button>
-
-
-<div
-id="compareResult"
-class="result"
->
-</div>
-
-
-<div
-class="compare-area"
-id="compareVisual"
->
-</div>
-
-</div>
-
-
-<div class="card">
-
-<h2>
-📍 Fraction Number Line
-</h2>
-
-<p>
-Place a fraction between 0 and 1.
-</p>
-
-
-<div class="control-grid">
-
-<div class="control">
-
-<label>
-Numerator
-</label>
-
-<input
-id="lineN"
-type="number"
-min="0"
-value="3"
->
-
-</div>
-
-
-<div class="control">
-
-<label>
-Denominator
-</label>
-
-<input
-id="lineD"
-type="number"
-min="1"
-value="4"
->
-
-</div>
-
-</div>
-
-
-<button
-class="btn btn-blue"
-onclick="drawLine()"
->
-📍 Place Fraction
-</button>
-
-
-<div
-id="numberLine"
-class="number-line"
->
-</div>
-
-</div>
-
-</section>
-
-
-<!-- =========================================================
-OPERATIONS
-========================================================= -->
-
-<section
-id="operations"
-class="section"
->
-
-<div class="card">
-
-<h2>
-➕ Fraction Addition & Subtraction
-</h2>
-
-<p>
-For this activity, use fractions with the same denominator.
-</p>
-
-
-<div class="control-grid">
-
-<div class="control">
-
-<label>
-First Fraction
-</label>
-
-<input
-id="opN1"
-type="number"
-min="0"
-value="2"
->
-
-/
-
-<input
-id="opD1"
-type="number"
-min="1"
-value="5"
->
-
-</div>
-
-
-<div class="control">
-
-<label>
-Operation
-</label>
-
-<select id="op">
-
-<option value="+">
-➕ Addition
-</option>
-
-<option value="-">
-➖ Subtraction
-</option>
-
-</select>
-
-</div>
-
-
-<div class="control">
-
-<label>
-Second Fraction
-</label>
-
-<input
-id="opN2"
-type="number"
-min="0"
-value="1"
->
-
-/
-
-<input
-id="opD2"
-type="number"
-min="1"
-value="5"
->
-
-</div>
-
-</div>
-
-
-<button
-class="btn btn-orange"
-onclick="calculateOperation()"
->
-🧮 Calculate
-</button>
-
-
-<div
-id="operationResult"
-class="result"
->
-</div>
-
-
-<div
-id="operationBar"
-class="fraction-bar"
->
-</div>
-
-</div>
-
-</section>
-
-
-<!-- =========================================================
-GAME
-========================================================= -->
-
-<section
-id="game"
-class="section"
->
-
-<div class="card">
-
-<h2>
-🧩 Equivalent Fraction Matching Game
-</h2>
-
-<p>
-
-Click two cards that represent
-the same fraction.
-
-</p>
-
-
-<div
-id="gameMessage"
-class="result"
->
-Find the matching pairs!
-</div>
-
-
-<div
-id="matchGrid"
-class="match-grid"
->
-</div>
-
-</div>
-
-</section>
-
-
-<!-- =========================================================
-QUIZ
-========================================================= -->
-
-<section
-id="quiz"
-class="section"
->
-
-<div class="card">
-
-<div class="quiz-header">
-
-<div>
-
-<h2>
-🏆 15-MCQ Fractions Challenge
-</h2>
-
-<p>
-Choose the best answer.
-</p>
-
-</div>
-
-<div class="score-badge">
-
-⭐ Score:
-<span id="liveScore">
-0
-</span>
-
-</div>
-
-</div>
-
-
-<div class="progress-container">
-
-<div
-id="quizProgress"
-class="progress-bar"
->
-</div>
-
-</div>
-
-
-<form id="quizForm">
-
-
-<!-- QUESTION 1 -->
-
-<div class="quiz-question">
-
-<h3>
-1. What is the numerator of 3/7?
-</h3>
-
-<label class="option">
-<input type="radio" name="q1" value="A">
-A. 3
-</label>
-
-<label class="option">
-<input type="radio" name="q1" value="B">
-B. 7
-</label>
-
-<label class="option">
-<input type="radio" name="q1" value="C">
-C. 10
-</label>
-
-<label class="option">
-<input type="radio" name="q1" value="D">
-D. 4
-</label>
-
-<div id="feedback1"
-class="quiz-feedback">
-</div>
-
-</div>
-
-
-<!-- QUESTION 2 -->
-
-<div class="quiz-question">
-
-<h3>
-2. What is the denominator of 5/9?
-</h3>
-
-<label class="option">
-<input type="radio" name="q2" value="A">
-A. 5
-</label>
-
-<label class="option">
-<input type="radio" name="q2" value="B">
-B. 9
-</label>
-
-<label class="option">
-<input type="radio" name="q2" value="C">
-C. 14
-</label>
-
-<label class="option">
-<input type="radio" name="q2" value="D">
-D. 4
-</label>
-
-<div id="feedback2"
-class="quiz-feedback">
-</div>
-
-</div>
-
-
-<!-- QUESTION 3 -->
-
-<div class="quiz-question">
-
-<h3>
-3. Which is a proper fraction?
-</h3>
-
-<label class="option">
-<input type="radio" name="q3" value="A">
-A. 7/4
-</label>
-
-<label class="option">
-<input type="radio" name="q3" value="B">
-B. 5/5
-</label>
-
-<label class="option">
-<input type="radio" name="q3" value="C">
-C. 3/8
-</label>
-
-<label class="option">
-<input type="radio" name="q3" value="D">
-D. 9/2
-</label>
-
-<div id="feedback3"
-class="quiz-feedback">
-</div>
-
-</div>
-
-
-<!-- QUESTION 4 -->
-
-<div class="quiz-question">
-
-<h3>
-4. Which is an improper fraction?
-</h3>
-
-<label class="option">
-<input type="radio" name="q4" value="A">
-A. 2/5
-</label>
-
-<label class="option">
-<input type="radio" name="q4" value="B">
-B. 3/7
-</label>
-
-<label class="option">
-<input type="radio" name="q4" value="C">
-C. 9/4
-</label>
-
-<label class="option">
-<input type="radio" name="q4" value="D">
-D. 1/6
-</label>
-
-<div id="feedback4"
-class="quiz-feedback">
-</div>
-
-</div>
-
-
-<!-- QUESTION 5 -->
-
-<div class="quiz-question">
-
-<h3>
-5. Which fraction is equivalent to 1/2?
-</h3>
-
-<label class="option">
-<input type="radio" name="q5" value="A">
-A. 2/3
-</label>
-
-<label class="option">
-<input type="radio" name="q5" value="B">
-B. 2/4
-</label>
-
-<label class="option">
-<input type="radio" name="q5" value="C">
-C. 3/4
-</label>
-
-<label class="option">
-<input type="radio" name="q5" value="D">
-D. 4/5
-</label>
-
-<div id="feedback5"
-class="quiz-feedback">
-</div>
-
-</div>
-
-
-<!-- QUESTION 6 -->
-
-<div class="quiz-question">
-
-<h3>
-6. What is 2/5 + 1/5?
-</h3>
-
-<label class="option">
-<input type="radio" name="q6" value="A">
-A. 3/10
-</label>
-
-<label class="option">
-<input type="radio" name="q6" value="B">
-B. 3/5
-</label>
-
-<label class="option">
-<input type="radio" name="q6" value="C">
-C. 2/5
-</label>
-
-<label class="option">
-<input type="radio" name="q6" value="D">
-D. 1/5
-</label>
-
-<div id="feedback6"
-class="quiz-feedback">
-</div>
-
-</div>
-
-
-<!-- QUESTION 7 -->
-
-<div class="quiz-question">
-
-<h3>
-7. What is 4/7 − 2/7?
-</h3>
-
-<label class="option">
-<input type="radio" name="q7" value="A">
-A. 2/7
-</label>
-
-<label class="option">
-<input type="radio" name="q7" value="B">
-B. 6/7
-</label>
-
-<label class="option">
-<input type="radio" name="q7" value="C">
-C. 2/14
-</label>
-
-<label class="option">
-<input type="radio" name="q7" value="D">
-D. 4/7
-</label>
-
-<div id="feedback7"
-class="quiz-feedback">
-</div>
-
-</div>
-
-
-<!-- QUESTION 8 -->
-
-<div class="quiz-question">
-
-<h3>
-8. Which is greater?
-</h3>
-
-<label class="option">
-<input type="radio" name="q8" value="A">
-A. 2/5
-</label>
-
-<label class="option">
-<input type="radio" name="q8" value="B">
-B. 4/5
-</label>
-
-<label class="option">
-<input type="radio" name="q8" value="C">
-C. They are equal
-</label>
-
-<label class="option">
-<input type="radio" name="q8" value="D">
-D. Cannot tell
-</label>
-
-<div id="feedback8"
-class="quiz-feedback">
-</div>
-
-</div>
-
-
-<!-- QUESTION 9 -->
-
-<div class="quiz-question">
-
-<h3>
-9. What is 1/4 as a decimal?
-</h3>
-
-<label class="option">
-<input type="radio" name="q9" value="A">
-A. 0.4
-</label>
-
-<label class="option">
-<input type="radio" name="q9" value="B">
-B. 0.14
-</label>
-
-<label class="option">
-<input type="radio" name="q9" value="C">
-C. 0.25
-</label>
-
-<label class="option">
-<input type="radio" name="q9" value="D">
-D. 2.5
-</label>
-
-<div id="feedback9"
-class="quiz-feedback">
-</div>
-
-</div>
-
-
-<!-- QUESTION 10 -->
-
-<div class="quiz-question">
-
-<h3>
-10. What is 1/2 as a percentage?
-</h3>
-
-<label class="option">
-<input type="radio" name="q10" value="A">
-A. 25%
-</label>
-
-<label class="option">
-<input type="radio" name="q10" value="B">
-B. 50%
-</label>
-
-<label class="option">
-<input type="radio" name="q10" value="C">
-C. 75%
-</label>
-
-<label class="option">
-<input type="radio" name="q10" value="D">
-D. 100%
-</label>
-
-<div id="feedback10"
-class="quiz-feedback">
-</div>
-
-</div>
-
-
-<!-- QUESTION 11 -->
-
-<div class="quiz-question">
-
-<h3>
-11. Which mixed number equals 7/4?
-</h3>
-
-<label class="option">
-<input type="radio" name="q11" value="A">
-A. 1 3/4
-</label>
-
-<label class="option">
-<input type="radio" name="q11" value="B">
-B. 2 1/4
-</label>
-
-<label class="option">
-<input type="radio" name="q11" value="C">
-C. 1 1/4
-</label>
-
-<label class="option">
-<input type="radio" name="q11" value="D">
-D. 2 3/4
-</label>
-
-<div id="feedback11"
-class="quiz-feedback">
-</div>
-
-</div>
-
-
-<!-- QUESTION 12 -->
-
-<div class="quiz-question">
-
-<h3>
-12. Which fraction is equal to 3/6?
-</h3>
-
-<label class="option">
-<input type="radio" name="q12" value="A">
-A. 1/2
-</label>
-
-<label class="option">
-<input type="radio" name="q12" value="B">
-B. 1/3
-</label>
-
-<label class="option">
-<input type="radio" name="q12" value="C">
-C. 2/3
-</label>
-
-<label class="option">
-<input type="radio" name="q12" value="D">
-D. 3/4
-</label>
-
-<div id="feedback12"
-class="quiz-feedback">
-</div>
-
-</div>
-
-
-<!-- QUESTION 13 -->
-
-<div class="quiz-question">
-
-<h3>
-13. What is 3/4 + 1/4?
-</h3>
-
-<label class="option">
-<input type="radio" name="q13" value="A">
-A. 1/2
-</label>
-
-<label class="option">
-<input type="radio" name="q13" value="B">
-B. 3/8
-</label>
-
-<label class="option">
-<input type="radio" name="q13" value="C">
-C. 1
-</label>
-
-<label class="option">
-<input type="radio" name="q13" value="D">
-D. 4/8
-</label>
-
-<div id="feedback13"
-class="quiz-feedback">
-</div>
-
-</div>
-
-
-<!-- QUESTION 14 -->
-
-<div class="quiz-question">
-
-<h3>
-14. Which fraction represents three quarters?
-</h3>
-
-<label class="option">
-<input type="radio" name="q14" value="A">
-A. 1/4
-</label>
-
-<label class="option">
-<input type="radio" name="q14" value="B">
-B. 2/4
-</label>
-
-<label class="option">
-<input type="radio" name="q14" value="C">
-C. 3/4
-</label>
-
-<label class="option">
-<input type="radio" name="q14" value="D">
-D. 4/3
-</label>
-
-<div id="feedback14"
-class="quiz-feedback">
-</div>
-
-</div>
-
-
-<!-- QUESTION 15 -->
-
-<div class="quiz-question">
-
-<h3>
-15. Which statement is correct?
-</h3>
-
-<label class="option">
-<input type="radio" name="q15" value="A">
-A. The denominator tells how many parts we have.
-</label>
-
-<label class="option">
-<input type="radio" name="q15" value="B">
-B. The numerator tells how many equal parts make the whole.
-</label>
-
-<label class="option">
-<input type="radio" name="q15" value="C">
-C. The denominator tells how many equal parts make the whole.
-</label>
-
-<label class="option">
-<input type="radio" name="q15" value="D">
-D. Fractions cannot be greater than 1.
-</label>
-
-<div id="feedback15"
-class="quiz-feedback">
-</div>
-
-</div>
-
-
-<button
-type="button"
-class="btn btn-purple"
-onclick="checkQuiz()"
->
-🏆 Submit Quiz
-</button>
-
-<button
-type="button"
-class="btn btn-gray"
-onclick="resetQuiz()"
->
-🔄 Reset
-</button>
-
-
-<div
-id="finalScore"
-class="final-score"
->
-</div>
-
-</form>
-
-</div>
-
-</section>
-
-
-</main>
-
-
-<!-- =========================================================
-FOOTER
-========================================================= -->
-
-<footer>
-
-<p>
-➗ <strong>Fractions Fun Lab</strong>
-</p>
-
-<p>
-Interactive Class 6 Mathematics Simulator
-</p>
-
-<p>
-Designed for learning on mobile, tablet and desktop
-</p>
-
-</footer>
-
-
-<script>
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-function showSection(
-    id,
-    button=null
-){
-
-    document
-    .querySelectorAll(".section")
-    .forEach(
-        section =>
-        section.classList.remove("active")
-    );
-
-
-    document
-    .getElementById(id)
-    .classList.add("active");
-
-
-    document
-    .querySelectorAll("nav button")
-    .forEach(
-        btn =>
-        btn.classList.remove(
-            "active-nav"
-        )
-    );
-
-
-    if(button){
-
-        button.classList.add(
-            "active-nav"
-        );
-
-    }
-
-
-    window.scrollTo({
-
-        top:0,
-
-        behavior:"smooth"
-
-    });
-
-}
-
-
-function goTo(id){
-
-    const button =
-        [...document.querySelectorAll(
-            "nav button"
-        )]
-        .find(
-            b =>
-            b.getAttribute("onclick")
-            ?.includes(
-                "'" + id + "'"
-            )
-        );
-
-
-    showSection(
-        id,
-        button
-    );
-
-}
-
-
-/* =========================================================
-   FRACTION HTML
-========================================================= */
-
-function fractionHTML(
-    n,
-    d
-){
-
-    return `
-
-        <span class="fraction">
-
-            <span class="top">
-                ${n}
-            </span>
-
-            <span class="bottom">
-                ${d}
-            </span>
-
-        </span>
-
-    `;
-
-}
-
-
-/* =========================================================
-   EXPLORER
-========================================================= */
-
-function updateExplorer(){
-
-    let n =
-        Number(
-            document.getElementById(
-                "numSlider"
-            ).value
-        );
-
-
-    let d =
-        Number(
-            document.getElementById(
-                "denSlider"
-            ).value
-        );
-
-
-    document.getElementById(
-        "numValue"
-    ).textContent = n;
-
-
-    document.getElementById(
-        "denValue"
-    ).textContent = d;
-
-
-    document.getElementById(
-        "explorerFraction"
-    ).innerHTML =
-        fractionHTML(n,d);
-
-
-    /* FRACTION BAR */
-
-    let bar =
-        document.getElementById(
-            "fractionBar"
-        );
-
-
-    bar.innerHTML="";
-
-
-    for(
-        let i=0;
-        i<d;
-        i++
-    ){
-
-        const piece =
-            document.createElement(
-                "div"
-            );
-
-
-        piece.className =
-            "bar-piece";
-
-
-        if(i<n){
-
-            piece.classList.add(
-                "filled"
-            );
-
-        }
-
-
-        bar.appendChild(piece);
-
-    }
-
-
-    /* CIRCLE */
-
-    createCircle(
-        n,
-        d
-    );
-
-
-    /* DESCRIPTION */
-
-    let value =
-        n/d;
-
-
-    let type =
-        n<d
-        ?
-        "Proper fraction"
-        :
-        n===d
-        ?
-        "One whole"
-        :
-        "Improper fraction";
-
-
-    document.getElementById(
-        "explorerResult"
-    ).innerHTML = `
-
-        <strong>
-            ${n}/${d}
-        </strong>
-
-        means
-
-        <strong>
-            ${n}
-        </strong>
-
-        out of
-
-        <strong>
-            ${d}
-        </strong>
-
-        equal parts.
-
-        <br><br>
-
-        Decimal value:
-
-        <span class="highlight">
-            ${value.toFixed(3)}
-        </span>
-
-        <br>
-
-        Type:
-
-        <span class="highlight">
-            ${type}
-        </span>
-
-    `;
-
-}
-
-
-/* =========================================================
-   CIRCLE
-========================================================= */
-
-function createCircle(
-    n,
-    d
-){
-
-    let area =
-        document.getElementById(
-            "circleArea"
-        );
-
-
-    area.innerHTML="";
-
-
-    let circle =
-        document.createElement(
-            "div"
-        );
-
-
-    circle.className =
-        "fraction-circle";
-
-
-    circle.style.gridTemplateColumns =
-        `repeat(${Math.min(d,6)},1fr)`;
-
-
-    circle.style.gridTemplateRows =
-        `repeat(${Math.ceil(d/6)},1fr)`;
-
-
-    for(
-        let i=0;
-        i<d;
-        i++
-    ){
-
-        let piece =
-            document.createElement(
-                "div"
-            );
-
-
-        piece.className =
-            "circle-piece";
-
-
-        piece.style.background =
-            i<n
-            ?
-            "linear-gradient(135deg,#7c3aed,#2563eb)"
-            :
-            "#dbeafe";
-
-
-        circle.appendChild(
-            piece
-        );
-
-    }
-
-
-    area.appendChild(
-        circle
-    );
-
-}
-
-
-/* =========================================================
-   TYPE DETECTOR
-========================================================= */
-
-function detectType(){
-
-    let n =
-        Number(
-            document.getElementById(
-                "typeN"
-            ).value
-        );
-
-
-    let d =
-        Number(
-            document.getElementById(
-                "typeD"
-            ).value
-        );
-
-
-    if(d<=0){
-
-        return;
-
-    }
-
-
-    let type;
-
-
-    if(n<d){
-
-        type =
-            "Proper Fraction";
-
-    }
-
-    else if(n===d){
-
-        type =
-            "Fraction equal to one";
-
-    }
-
-    else{
-
-        type =
-            "Improper Fraction";
-
-    }
-
-
-    document.getElementById(
-        "typeResult"
-    ).innerHTML = `
-
-        ${fractionHTML(n,d)}
-
-        <br>
-
-        <span class="highlight">
-            ${type}
-        </span>
-
-        <br><br>
-
-        Decimal value:
-        ${(n/d).toFixed(3)}
-
-    `;
-
-}
-
-
-/* =========================================================
-   MIXED NUMBER
-========================================================= */
-
-function mixedConvert(){
-
-    let whole =
-        Number(
-            document.getElementById(
-                "mixedWhole"
-            ).value
-        );
-
-
-    let n =
-        Number(
-            document.getElementById(
-                "mixedN"
-            ).value
-        );
-
-
-    let d =
-        Number(
-            document.getElementById(
-                "mixedD"
-            ).value
-        );
-
-
-    let result =
-        whole*d+n;
-
-
-    document.getElementById(
-        "mixedResult"
-    ).innerHTML = `
-
-        ${whole}
-
-        ${fractionHTML(n,d)}
-
-        =
-
-        ${fractionHTML(result,d)}
-
-        <br><br>
-
-        Formula:
-
-        (${whole} × ${d}) + ${n}
-
-        =
-
-        <strong>
-            ${result}
-        </strong>
-
-    `;
-
-}
-
-
-/* =========================================================
-   EQUIVALENT FRACTIONS
-========================================================= */
-
-function generateEquivalent(){
-
-    let n =
-        Number(
-            document.getElementById(
-                "eqN"
-            ).value
-        );
-
-
-    let d =
-        Number(
-            document.getElementById(
-                "eqD"
-            ).value
-        );
-
-
-    let m =
-        Number(
-            document.getElementById(
-                "multiplier"
-            ).value
-        );
-
-
-    let newN =
-        n*m;
-
-
-    let newD =
-        d*m;
-
-
-    document.getElementById(
-        "equivalentDisplay"
-    ).innerHTML = `
-
-        ${fractionHTML(n,d)}
-
-        <span class="equals">
-            =
-        </span>
-
-        ${fractionHTML(newN,newD)}
-
-    `;
-
-
-    let bar =
-        document.getElementById(
-            "equivalentVisual"
-        );
-
-
-    bar.innerHTML="";
-
-
-    let parts =
-        Math.min(
-            newD,
-            24
-        );
-
-
-    for(
-        let i=0;
-        i<parts;
-        i++
-    ){
-
-        let p =
-            document.createElement(
-                "div"
-            );
-
-
-        p.className =
-            "bar-piece";
-
-
-        if(
-            i <
-            Math.round(
-                newN/newD*parts
-            )
-        ){
-
-            p.classList.add(
-                "filled"
-            );
-
-        }
-
-
-        bar.appendChild(p);
-
-    }
-
-
-    document.getElementById(
-        "equivalentResult"
-    ).innerHTML = `
-
-        Multiply numerator and denominator
-        by
-
-        <strong>
-            ${m}
-        </strong>.
-
-        <br><br>
-
-        ${n} × ${m} = ${newN}
-
-        <br>
-
-        ${d} × ${m} = ${newD}
-
-        <br><br>
-
-        Both fractions have the same value:
-
-        <strong>
-            ${(n/d).toFixed(3)}
-        </strong>
-
-    `;
-
-}
-
-
-/* =========================================================
-   COMPARE
-========================================================= */
-
-function compare(){
-
-    let n1 =
-        Number(
-            document.getElementById(
-                "cmpN1"
-            ).value
-        );
-
-
-    let d1 =
-        Number(
-            document.getElementById(
-                "cmpD1"
-            ).value
-        );
-
-
-    let n2 =
-        Number(
-            document.getElementById(
-                "cmpN2"
-            ).value
-        );
-
-
-    let d2 =
-        Number(
-            document.getElementById(
-                "cmpD2"
-            ).value
-        );
-
-
-    let v1 =
-        n1/d1;
-
-
-    let v2 =
-        n2/d2;
-
-
-    let symbol =
-        v1>v2
-        ?
-        ">"
-        :
-        v1<v2
-        ?
-        "<"
-        :
-        "=";
-
-
-    document.getElementById(
-        "compareResult"
-    ).innerHTML = `
-
-        ${fractionHTML(n1,d1)}
-
-        <span class="highlight">
-            ${symbol}
-        </span>
-
-        ${fractionHTML(n2,d2)}
-
-        <br><br>
-
-        ${v1.toFixed(3)}
-        ${symbol}
-        ${v2.toFixed(3)}
-
-    `;
-
-
-    document.getElementById(
-        "compareVisual"
-    ).innerHTML = `
-
-        <div class="compare-box">
-
-            ${fractionHTML(n1,d1)}
-
-            <div
-            class="fraction-bar"
-            style="height:35px"
-            id="barA"
-            ></div>
-
+    <!-- =========================================================
+    HEADER
+    ========================================================= -->
+    <header>
+        <div class="header-content">
+            <div class="logo">➗</div>
+            <h1>Fractions Fun Lab</h1>
+            <p>Mathematics • Explore • Play • Learn</p>
         </div>
+    </header>
 
-        <div class="compare-symbol">
+    <!-- =========================================================
+    NAVIGATION
+    ========================================================= -->
+    <nav id="mainNav">
+        <button onclick="showSection('home',this)" class="active-nav">🏠 Home</button>
+        <button onclick="showSection('notes',this)">📘 Notes</button>
+        <button onclick="showSection('explorer',this)">🍕 Explore</button>
+        <button onclick="showSection('types',this)">🔎 Types</button>
+        <button onclick="showSection('equivalent',this)">🔄 Equivalent</button>
+        <button onclick="showSection('compare',this)">⚖️ Compare</button>
+        <button onclick="showSection('operations',this)">➕ Operations</button>
+        <button onclick="showSection('game',this)">🧩 Game</button>
+        <button onclick="showSection('quiz',this)">🏆 Quiz</button>
+    </nav>
 
-            ${symbol}
+    <main>
 
-        </div>
+        <!-- =========================================================
+        HOME
+        ========================================================= -->
+        <section id="home" class="section active">
+            <div class="card welcome">
+                <h2>👋 Welcome to the Fractions Fun Lab!</h2>
+                <p class="welcome-text">Fractions become easier when you can <strong>see them, change them and play with them.</strong> Choose a learning activity below.</p>
 
-        <div class="compare-box">
-
-            ${fractionHTML(n2,d2)}
-
-            <div
-            class="fraction-bar"
-            style="height:35px"
-            id="barB"
-            ></div>
-
-        </div>
-
-    `;
-
-
-    createCompareBar(
-        "barA",
-        n1,
-        d1
-    );
-
-
-    createCompareBar(
-        "barB",
-        n2,
-        d2
-    );
-
-}
-
-
-function createCompareBar(
-    id,
-    n,
-    d
-){
-
-    let bar =
-        document.getElementById(id);
-
-
-    bar.innerHTML="";
-
-
-    for(
-        let i=0;
-        i<d;
-        i++
-    ){
-
-        let p =
-            document.createElement(
-                "div"
-            );
-
-
-        p.className =
-            "bar-piece";
-
-
-        if(i<n){
-
-            p.classList.add(
-                "filled"
-            );
-
-        }
-
-
-        bar.appendChild(p);
-
-    }
-
-}
-
-
-/* =========================================================
-   NUMBER LINE
-========================================================= */
-
-function drawLine(){
-
-    let n =
-        Number(
-            document.getElementById(
-                "lineN"
-            ).value
-        );
-
-
-    let d =
-        Number(
-            document.getElementById(
-                "lineD"
-            ).value
-        );
-
-
-    if(
-        d<=0 ||
-        n<0 ||
-        n>d
-    ){
-
-        return;
-
-    }
-
-
-    let line =
-        document.getElementById(
-            "numberLine"
-        );
-
-
-    line.innerHTML="";
-
-
-    for(
-        let i=0;
-        i<=d;
-        i++
-    ){
-
-        let position =
-            5 +
-            (i/d)*90;
-
-
-        line.innerHTML += `
-
-            <div
-            class="tick"
-            style="left:${position}%"
-            ></div>
-
-            <div
-            class="tick-label"
-            style="left:${position}%"
-            >
-
-                ${i}/${d}
-
+                <div class="learning-grid">
+                    <div class="learning-card card-purple" onclick="goTo('explorer')">
+                        <div class="icon">🍕</div>
+                        <h3>Fraction Explorer</h3>
+                        <p>Build fractions and see them visually.</p>
+                    </div>
+                    <div class="learning-card card-blue" onclick="goTo('equivalent')">
+                        <div class="icon">🔄</div>
+                        <h3>Equivalent Fractions</h3>
+                        <p>Discover fractions with the same value.</p>
+                    </div>
+                    <div class="learning-card card-pink" onclick="goTo('compare')">
+                        <div class="icon">⚖️</div>
+                        <h3>Compare Fractions</h3>
+                        <p>Find which fraction is greater.</p>
+                    </div>
+                    <div class="learning-card card-orange" onclick="goTo('operations')">
+                        <div class="icon">➕</div>
+                        <h3>Operations</h3>
+                        <p>Add and subtract fractions.</p>
+                    </div>
+                    <div class="learning-card card-green" onclick="goTo('game')">
+                        <div class="icon">🧩</div>
+                        <h3>Matching Game</h3>
+                        <p>Match equivalent fractions.</p>
+                    </div>
+                    <div class="learning-card card-indigo" onclick="goTo('quiz')">
+                        <div class="icon">🏆</div>
+                        <h3>15-MCQ Challenge</h3>
+                        <p>Test what you have learned.</p>
+                    </div>
+                </div>
             </div>
 
-        `;
-
-    }
-
-
-    let marker =
-        5+
-        (n/d)*90;
-
-
-    line.innerHTML += `
-
-        <div
-        class="number-marker"
-        style="left:${marker}%"
-        ></div>
-
-    `;
-
-}
-
-
-/* =========================================================
-   OPERATIONS
-========================================================= */
-
-function calculateOperation(){
-
-    let n1 =
-        Number(
-            document.getElementById(
-                "opN1"
-            ).value
-        );
-
-
-    let d1 =
-        Number(
-            document.getElementById(
-                "opD1"
-            ).value
-        );
-
-
-    let n2 =
-        Number(
-            document.getElementById(
-                "opN2"
-            ).value
-        );
-
-
-    let d2 =
-        Number(
-            document.getElementById(
-                "opD2"
-            ).value
-        );
-
-
-    let operation =
-        document.getElementById(
-            "op"
-        ).value;
-
-
-    if(d1!==d2){
-
-        document.getElementById(
-            "operationResult"
-        ).innerHTML = `
-
-            ⚠️ Please use the same
-            denominator for this activity.
-
-            <br><br>
-
-            Example:
-
-            2/7 + 3/7
-
-        `;
-
-        return;
-
-    }
-
-
-    let result =
-        operation==="+"
-        ?
-        n1+n2
-        :
-        n1-n2;
-
-
-    document.getElementById(
-        "operationResult"
-    ).innerHTML = `
-
-        ${fractionHTML(n1,d1)}
-
-        <strong>
-            ${operation}
-        </strong>
-
-        ${fractionHTML(n2,d2)}
-
-        =
-
-        ${fractionHTML(result,d1)}
-
-        <br><br>
-
-        Decimal:
-
-        ${(result/d1).toFixed(3)}
-
-    `;
-
-
-    createCompareBar(
-        "operationBar",
-        Math.max(result,0),
-        d1
-    );
-
-}
-
-
-/* =========================================================
-   MATCHING GAME
-========================================================= */
-
-const gamePairs = [
-
-    ["1/2","2/4"],
-
-    ["1/3","2/6"],
-
-    ["3/4","6/8"],
-
-    ["2/5","4/10"]
-
-];
-
-
-let gameCards=[];
-
-let selectedCards=[];
-
-let matchedPairs=0;
-
-
-function startGame(){
-
-    gameCards=[];
-
-    gamePairs.forEach(
-        pair => {
-
-            gameCards.push(
-                {
-                    value:pair[0],
-                    pair:pair[0]
-                }
-            );
-
-            gameCards.push(
-                {
-                    value:pair[1],
-                    pair:pair[0]
-                }
-            );
-
+            <div class="card">
+                <h2>🎯 Learning Targets</h2>
+                <ul class="notes-list">
+                    <li>Identify numerator and denominator.</li>
+                    <li>Recognise proper and improper fractions.</li>
+                    <li>Understand equivalent fractions.</li>
+                    <li>Compare fractions.</li>
+                    <li>Add and subtract fractions with the same denominator.</li>
+                    <li>Convert fractions to decimals and percentages.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- =========================================================
+        NOTES
+        ========================================================= -->
+        <section id="notes" class="section">
+            <div class="card">
+                <h2>📘 Fraction Study Notes</h2>
+
+                <div class="definition">
+                    <strong>A fraction represents part of a whole.</strong> For example,
+                    <span class="fraction">
+                        <span class="top">3</span>
+                        <span class="bottom">4</span>
+                    </span>
+                    means 3 equal parts out of 4 equal parts.
+                </div>
+
+                <h3>🔵 Numerator</h3>
+                <p>The numerator is the <strong>top number</strong>. It tells us how many parts are being considered.</p>
+
+                <h3>🟣 Denominator</h3>
+                <p>The denominator is the <strong>bottom number</strong>. It tells us how many equal parts make the whole.</p>
+
+                <div class="example-box">
+                    <strong>Example:</strong>
+                    <span class="fraction">
+                        <span class="top">5</span>
+                        <span class="bottom">8</span>
+                    </span>
+                    <br> Numerator = 5 <br> Denominator = 8
+                </div>
+
+                <h3>🌟 Types of Fractions</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <tr>
+                            <th>Type</th>
+                            <th>Example</th>
+                            <th>Rule</th>
+                        </tr>
+                        <tr>
+                            <td>Proper</td>
+                            <td>3/7</td>
+                            <td>Numerator &lt; Denominator</td>
+                        </tr>
+                        <tr>
+                            <td>Improper</td>
+                            <td>9/4</td>
+                            <td>Numerator ≥ Denominator</td>
+                        </tr>
+                        <tr>
+                            <td>Mixed Number</td>
+                            <td>2 1/4</td>
+                            <td>Whole number + fraction</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h3>🔄 Equivalent Fractions</h3>
+                <p>Equivalent fractions have exactly the same value.</p>
+                <div class="definition">1/2 = 2/4 = 3/6 = 4/8</div>
+                <p>Multiply or divide the numerator and denominator by the same non-zero number.</p>
+
+                <h3>⚖️ Comparing Fractions</h3>
+                <ul class="notes-list">
+                    <li>If denominators are the same, compare the numerators.</li>
+                    <li>For different denominators, convert them into equivalent fractions or use cross multiplication.</li>
+                </ul>
+
+                <h3>➕ Adding Fractions</h3>
+                <div class="definition">When denominators are the same: <br><br> 2/7 + 3/7 = 5/7</div>
+
+                <h3>➖ Subtracting Fractions</h3>
+                <div class="definition">5/8 − 2/8 = 3/8</div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+        EXPLORER — FIXED FOR IMPROPER FRACTIONS
+        ========================================================= -->
+        <section id="explorer" class="section">
+            <div class="card">
+                <h2>🍕 Interactive Fraction Explorer</h2>
+                <p>Move the sliders and watch the fraction change!</p>
+
+                <div class="control-grid">
+                    <div class="control">
+                        <label>Numerator: <span id="numValue" class="highlight">3</span></label>
+                        <input id="numSlider" type="range" min="0" max="12" value="3" oninput="updateExplorer()">
+                    </div>
+                    <div class="control">
+                        <label>Denominator: <span id="denValue" class="highlight">5</span></label>
+                        <input id="denSlider" type="range" min="1" max="12" value="5" oninput="updateExplorer()">
+                    </div>
+                </div>
+
+                <div style="text-align:center">
+                    <div id="explorerFraction" class="big-fraction"></div>
+                </div>
+
+                <div id="fractionBar" class="fraction-bar"></div>
+
+                <div id="circleArea" class="circle-area"></div>
+
+                <div id="explorerResult" class="result"></div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+        TYPES
+        ========================================================= -->
+        <section id="types" class="section">
+            <div class="card">
+                <h2>🔎 Fraction Type Detector</h2>
+                <p>Enter a fraction and let the simulator identify it.</p>
+
+                <div class="control-grid">
+                    <div class="control">
+                        <label>Numerator</label>
+                        <input id="typeN" type="number" min="0" value="7">
+                    </div>
+                    <div class="control">
+                        <label>Denominator</label>
+                        <input id="typeD" type="number" min="1" value="4">
+                    </div>
+                </div>
+
+                <button class="btn btn-purple" onclick="detectType()">🔍 Identify Fraction</button>
+
+                <div id="typeResult" class="result">Enter a fraction and click Identify.</div>
+            </div>
+
+            <div class="card">
+                <h2>🔀 Mixed Number → Improper Fraction</h2>
+                <div class="control-grid">
+                    <div class="control">
+                        <label>Whole Number</label>
+                        <input id="mixedWhole" type="number" value="2" min="0">
+                    </div>
+                    <div class="control">
+                        <label>Numerator</label>
+                        <input id="mixedN" type="number" value="3" min="0">
+                    </div>
+                    <div class="control">
+                        <label>Denominator</label>
+                        <input id="mixedD" type="number" value="4" min="1">
+                    </div>
+                </div>
+                <button class="btn btn-blue" onclick="mixedConvert()">🔄 Convert</button>
+                <div id="mixedResult" class="result"></div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+        EQUIVALENT
+        ========================================================= -->
+        <section id="equivalent" class="section">
+            <div class="card">
+                <h2>🔄 Equivalent Fraction Lab</h2>
+                <p>Choose a fraction and multiply both numbers by the same value.</p>
+
+                <div class="control-grid">
+                    <div class="control">
+                        <label>Numerator</label>
+                        <input id="eqN" type="number" min="0" value="1">
+                    </div>
+                    <div class="control">
+                        <label>Denominator</label>
+                        <input id="eqD" type="number" min="1" value="2">
+                    </div>
+                    <div class="control">
+                        <label>Multiplier <span id="multiplierValue" class="highlight">2</span></label>
+                        <input id="multiplier" type="range" min="1" max="8" value="2" oninput="document.getElementById('multiplierValue').textContent=this.value;generateEquivalent();">
+                    </div>
+                </div>
+
+                <div id="equivalentDisplay" class="equivalent-display"></div>
+                <div id="equivalentVisual" class="fraction-bar"></div>
+                <div id="equivalentResult" class="result"></div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+        COMPARE
+        ========================================================= -->
+        <section id="compare" class="section">
+            <div class="card">
+                <h2>⚖️ Fraction Battle</h2>
+                <p>Which fraction is greater?</p>
+
+                <div class="control-grid">
+                    <div class="control">
+                        <label>First Fraction</label>
+                        <input id="cmpN1" type="number" min="0" value="2"> / <input id="cmpD1" type="number" min="1" value="3">
+                    </div>
+                    <div class="control">
+                        <label>Second Fraction</label>
+                        <input id="cmpN2" type="number" min="0" value="3"> / <input id="cmpD2" type="number" min="1" value="5">
+                    </div>
+                </div>
+
+                <button class="btn btn-pink" onclick="compare()">⚔️ Compare</button>
+
+                <div id="compareResult" class="result"></div>
+                <div class="compare-area" id="compareVisual"></div>
+            </div>
+
+            <div class="card">
+                <h2>📍 Fraction Number Line</h2>
+                <p>Place a fraction between 0 and 1.</p>
+                <div class="control-grid">
+                    <div class="control">
+                        <label>Numerator</label>
+                        <input id="lineN" type="number" min="0" value="3">
+                    </div>
+                    <div class="control">
+                        <label>Denominator</label>
+                        <input id="lineD" type="number" min="1" value="4">
+                    </div>
+                </div>
+                <button class="btn btn-blue" onclick="drawLine()">📍 Place Fraction</button>
+                <div id="numberLine" class="number-line"></div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+        OPERATIONS
+        ========================================================= -->
+        <section id="operations" class="section">
+            <div class="card">
+                <h2>➕ Fraction Addition & Subtraction</h2>
+                <p>For this activity, use fractions with the same denominator.</p>
+
+                <div class="control-grid">
+                    <div class="control">
+                        <label>First Fraction</label>
+                        <input id="opN1" type="number" min="0" value="2"> / <input id="opD1" type="number" min="1" value="5">
+                    </div>
+                    <div class="control">
+                        <label>Operation</label>
+                        <select id="op">
+                            <option value="+">➕ Addition</option>
+                            <option value="-">➖ Subtraction</option>
+                        </select>
+                    </div>
+                    <div class="control">
+                        <label>Second Fraction</label>
+                        <input id="opN2" type="number" min="0" value="1"> / <input id="opD2" type="number" min="1" value="5">
+                    </div>
+                </div>
+
+                <button class="btn btn-orange" onclick="calculateOperation()">🧮 Calculate</button>
+
+                <div id="operationResult" class="result"></div>
+                <div id="operationBar" class="fraction-bar"></div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+        GAME
+        ========================================================= -->
+        <section id="game" class="section">
+            <div class="card">
+                <h2>🧩 Equivalent Fraction Matching Game</h2>
+                <p>Click two cards that represent the same fraction.</p>
+                <div id="gameMessage" class="result">Find the matching pairs!</div>
+                <div id="matchGrid" class="match-grid"></div>
+            </div>
+        </section>
+
+        <!-- =========================================================
+        QUIZ
+        ========================================================= -->
+        <section id="quiz" class="section">
+            <div class="card">
+                <div class="quiz-header">
+                    <div>
+                        <h2>🏆 15-MCQ Fractions Challenge</h2>
+                        <p>Choose the best answer.</p>
+                    </div>
+                    <div class="score-badge">⭐ Score: <span id="liveScore">0</span></div>
+                </div>
+
+                <div class="progress-container">
+                    <div id="quizProgress" class="progress-bar"></div>
+                </div>
+
+                <form id="quizForm">
+                    <!-- Questions 1-15 (same as original, kept concise) -->
+                    <div class="quiz-question"><h3>1. What is the numerator of 3/7?</h3>
+                        <label class="option"><input type="radio" name="q1" value="A"> A. 3</label>
+                        <label class="option"><input type="radio" name="q1" value="B"> B. 7</label>
+                        <label class="option"><input type="radio" name="q1" value="C"> C. 10</label>
+                        <label class="option"><input type="radio" name="q1" value="D"> D. 4</label>
+                        <div id="feedback1" class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question"><h3>2. What is the denominator of 5/9?</h3>
+                        <label class="option"><input type="radio" name="q2" value="A"> A. 5</label>
+                        <label class="option"><input type="radio" name="q2" value="B"> B. 9</label>
+                        <label class="option"><input type="radio" name="q2" value="C"> C. 14</label>
+                        <label class="option"><input type="radio" name="q2" value="D"> D. 4</label>
+                        <div id="feedback2" class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question"><h3>3. Which is a proper fraction?</h3>
+                        <label class="option"><input type="radio" name="q3" value="A"> A. 7/4</label>
+                        <label class="option"><input type="radio" name="q3" value="B"> B. 5/5</label>
+                        <label class="option"><input type="radio" name="q3" value="C"> C. 3/8</label>
+                        <label class="option"><input type="radio" name="q3" value="D"> D. 9/2</label>
+                        <div id="feedback3" class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question"><h3>4. Which is an improper fraction?</h3>
+                        <label class="option"><input type="radio" name="q4" value="A"> A. 2/5</label>
+                        <label class="option"><input type="radio" name="q4" value="B"> B. 3/7</label>
+                        <label class="option"><input type="radio" name="q4" value="C"> C. 9/4</label>
+                        <label class="option"><input type="radio" name="q4" value="D"> D. 1/6</label>
+                        <div id="feedback4" class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question"><h3>5. Which fraction is equivalent to 1/2?</h3>
+                        <label class="option"><input type="radio" name="q5" value="A"> A. 2/3</label>
+                        <label class="option"><input type="radio" name="q5" value="B"> B. 2/4</label>
+                        <label class="option"><input type="radio" name="q5" value="C"> C. 3/4</label>
+                        <label class="option"><input type="radio" name="q5" value="D"> D. 4/5</label>
+                        <div id="feedback5" class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question"><h3>6. What is 2/5 + 1/5?</h3>
+                        <label class="option"><input type="radio" name="q6" value="A"> A. 3/10</label>
+                        <label class="option"><input type="radio" name="q6" value="B"> B. 3/5</label>
+                        <label class="option"><input type="radio" name="q6" value="C"> C. 2/5</label>
+                        <label class="option"><input type="radio" name="q6" value="D"> D. 1/5</label>
+                        <div id="feedback6" class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question"><h3>7. What is 4/7 − 2/7?</h3>
+                        <label class="option"><input type="radio" name="q7" value="A"> A. 2/7</label>
+                        <label class="option"><input type="radio" name="q7" value="B"> B. 6/7</label>
+                        <label class="option"><input type="radio" name="q7" value="C"> C. 2/14</label>
+                        <label class="option"><input type="radio" name="q7" value="D"> D. 4/7</label>
+                        <div id="feedback7" class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question"><h3>8. Which is greater?</h3>
+                        <label class="option"><input type="radio" name="q8" value="A"> A. 2/5</label>
+                        <label class="option"><input type="radio" name="q8" value="B"> B. 4/5</label>
+                        <label class="option"><input type="radio" name="q8" value="C"> C. They are equal</label>
+                        <label class="option"><input type="radio" name="q8" value="D"> D. Cannot tell</label>
+                        <div id="feedback8" class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question"><h3>9. What is 1/4 as a decimal?</h3>
+                        <label class="option"><input type="radio" name="q9" value="A"> A. 0.4</label>
+                        <label class="option"><input type="radio" name="q9" value="B"> B. 0.14</label>
+                        <label class="option"><input type="radio" name="q9" value="C"> C. 0.25</label>
+                        <label class="option"><input type="radio" name="q9" value="D"> D. 2.5</label>
+                        <div id="feedback9" class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question"><h3>10. What is 1/2 as a percentage?</h3>
+                        <label class="option"><input type="radio" name="q10" value="A"> A. 25%</label>
+                        <label class="option"><input type="radio" name="q10" value="B"> B. 50%</label>
+                        <label class="option"><input type="radio" name="q10" value="C"> C. 75%</label>
+                        <label class="option"><input type="radio" name="q10" value="D"> D. 100%</label>
+                        <div id="feedback10" class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question"><h3>11. Which mixed number equals 7/4?</h3>
+                        <label class="option"><input type="radio" name="q11" value="A"> A. 1 3/4</label>
+                        <label class="option"><input type="radio" name="q11" value="B"> B. 2 1/4</label>
+                        <label class="option"><input type="radio" name="q11" value="C"> C. 1 1/4</label>
+                        <label class="option"><input type="radio" name="q11" value="D"> D. 2 3/4</label>
+                        <div id="feedback11" class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question"><h3>12. Which fraction is equal to 3/6?</h3>
+                        <label class="option"><input type="radio" name="q12" value="A"> A. 1/2</label>
+                        <label class="option"><input type="radio" name="q12" value="B"> B. 1/3</label>
+                        <label class="option"><input type="radio" name="q12" value="C"> C. 2/3</label>
+                        <label class="option"><input type="radio" name="q12" value="D"> D. 3/4</label>
+                        <div id="feedback12" class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question"><h3>13. What is 3/4 + 1/4?</h3>
+                        <label class="option"><input type="radio" name="q13" value="A"> A. 1/2</label>
+                        <label class="option"><input type="radio" name="q13" value="B"> B. 3/8</label>
+                        <label class="option"><input type="radio" name="q13" value="C"> C. 1</label>
+                        <label class="option"><input type="radio" name="q13" value="D"> D. 4/8</label>
+                        <div id="feedback13" class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question"><h3>14. Which fraction represents three quarters?</h3>
+                        <label class="option"><input type="radio" name="q14" value="A"> A. 1/4</label>
+                        <label class="option"><input type="radio" name="q14" value="B"> B. 2/4</label>
+                        <label class="option"><input type="radio" name="q14" value="C"> C. 3/4</label>
+                        <label class="option"><input type="radio" name="q14" value="D"> D. 4/3</label>
+                        <div id="feedback14" class="quiz-feedback"></div>
+                    </div>
+                    <div class="quiz-question"><h3>15. Which statement is correct?</h3>
+                        <label class="option"><input type="radio" name="q15" value="A"> A. The denominator tells how many parts we have.</label>
+                        <label class="option"><input type="radio" name="q15" value="B"> B. The numerator tells how many equal parts make the whole.</label>
+                        <label class="option"><input type="radio" name="q15" value="C"> C. The denominator tells how many equal parts make the whole.</label>
+                        <label class="option"><input type="radio" name="q15" value="D"> D. Fractions cannot be greater than 1.</label>
+                        <div id="feedback15" class="quiz-feedback"></div>
+                    </div>
+
+                    <button type="button" class="btn btn-purple" onclick="checkQuiz()">🏆 Submit Quiz</button>
+                    <button type="button" class="btn btn-gray" onclick="resetQuiz()">🔄 Reset</button>
+
+                    <div id="finalScore" class="final-score"></div>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- =========================================================
+    FOOTER
+    ========================================================= -->
+    <footer>
+        <p>➗ <strong>Fractions Fun Lab</strong></p>
+        <p>Interactive Class 6 Mathematics Simulator</p>
+        <p>Designed for learning on mobile, tablet and desktop</p>
+    </footer>
+
+    <script>
+        /* =========================================================
+           NAVIGATION
+        ========================================================= */
+        function showSection(id, button = null) {
+            document.querySelectorAll(".section").forEach(section => section.classList.remove("active"));
+            document.getElementById(id).classList.add("active");
+            document.querySelectorAll("nav button").forEach(btn => btn.classList.remove("active-nav"));
+            if (button) button.classList.add("active-nav");
+            window.scrollTo({ top: 0, behavior: "smooth" });
         }
-    );
 
-
-    gameCards.sort(
-        () =>
-        Math.random()-.5
-    );
-
-
-    let grid =
-        document.getElementById(
-            "matchGrid"
-        );
-
-
-    grid.innerHTML="";
-
-
-    selectedCards=[];
-
-    matchedPairs=0;
-
-
-    gameCards.forEach(
-        (card,index)=>{
-
-            let button =
-                document.createElement(
-                    "button"
-                );
-
-
-            button.className =
-                "match-card";
-
-
-            button.textContent =
-                card.value;
-
-
-            button.dataset.pair =
-                card.pair;
-
-
-            button.onclick =
-                () =>
-                selectCard(
-                    button,
-                    index
-                );
-
-
-            grid.appendChild(
-                button
-            );
-
+        function goTo(id) {
+            const button = [...document.querySelectorAll("nav button")].find(b => b.getAttribute("onclick")?.includes("'" +
+                id + "'"));
+            showSection(id, button);
         }
-    );
 
-}
+        /* =========================================================
+           FRACTION HTML
+        ========================================================= */
+        function fractionHTML(n, d) {
+            return `<span class="fraction"><span class="top">${n}</span><span class="bottom">${d}</span></span>`;
+        }
 
+        /* =========================================================
+           EXPLORER — FIXED FOR IMPROPER FRACTIONS
+        ========================================================= */
+        function updateExplorer() {
+            let n = Number(document.getElementById("numSlider").value);
+            let d = Number(document.getElementById("denSlider").value);
 
-function selectCard(
-    button,
-    index
-){
+            document.getElementById("numValue").textContent = n;
+            document.getElementById("denValue").textContent = d;
 
-    if(
-        button.classList.contains(
-            "correct"
-        ) ||
-        selectedCards.length>=2
-    ){
+            // Big fraction display
+            document.getElementById("explorerFraction").innerHTML = fractionHTML(n, d);
 
-        return;
+            // ─── FRACTION BAR (multiple rows for improper) ───
+            let bar = document.getElementById("fractionBar");
+            bar.innerHTML = "";
 
-    }
+            let whole = Math.floor(n / d);
+            let rem = n % d;
 
-
-    button.classList.add(
-        "wrong"
-    );
-
-
-    selectedCards.push({
-        button,
-        pair:
-        button.dataset.pair
-    });
-
-
-    if(
-        selectedCards.length===2
-    ){
-
-        if(
-            selectedCards[0].pair===
-            selectedCards[1].pair
-        ){
-
-            selectedCards.forEach(
-                item=>{
-
-                    item.button.classList.remove(
-                        "wrong"
-                    );
-
-                    item.button.classList.add(
-                        "correct"
-                    );
-
+            // If numerator is 0, show empty bar
+            if (n === 0) {
+                let row = document.createElement("div");
+                row.className = "bar-row";
+                for (let i = 0; i < d; i++) {
+                    let piece = document.createElement("div");
+                    piece.className = "bar-piece";
+                    row.appendChild(piece);
                 }
-            );
+                bar.appendChild(row);
+                let label = document.createElement("div");
+                label.className = "bar-row-label";
+                label.textContent = "0 / " + d + " — zero";
+                bar.appendChild(label);
+            } else {
+                // Show full bars (whole)
+                for (let w = 0; w < whole; w++) {
+                    let row = document.createElement("div");
+                    row.className = "bar-row";
+                    for (let i = 0; i < d; i++) {
+                        let piece = document.createElement("div");
+                        piece.className = "bar-piece filled";
+                        row.appendChild(piece);
+                    }
+                    bar.appendChild(row);
+                    let label = document.createElement("div");
+                    label.className = "bar-row-label";
+                    label.textContent = (w + 1) + " whole" + (w > 0 ? "s" : "");
+                    bar.appendChild(label);
+                }
 
-
-            matchedPairs++;
-
-
-            document.getElementById(
-                "gameMessage"
-            ).innerHTML = `
-
-                🎉 Excellent!
-
-                ${matchedPairs}/4
-                pairs matched.
-
-            `;
-
-
-            selectedCards=[];
-
-
-            if(
-                matchedPairs===4
-            ){
-
-                document.getElementById(
-                    "gameMessage"
-                ).innerHTML = `
-
-                    🏆 Amazing!
-
-                    You matched all
-                    the equivalent fractions!
-
-                `;
-
-                celebrate();
-
+                // Show partial bar (remainder)
+                if (rem > 0) {
+                    let row = document.createElement("div");
+                    row.className = "bar-row";
+                    for (let i = 0; i < d; i++) {
+                        let piece = document.createElement("div");
+                        piece.className = "bar-piece" + (i < rem ? " filled" : "");
+                        row.appendChild(piece);
+                    }
+                    bar.appendChild(row);
+                    let label = document.createElement("div");
+                    label.className = "bar-row-label";
+                    label.textContent = rem + " / " + d + (whole > 0 ? " (remainder)" : "");
+                    bar.appendChild(label);
+                }
             }
 
+            // ─── CIRCLE (multiple circles for improper) ───
+            let area = document.getElementById("circleArea");
+            area.innerHTML = "";
+
+            if (n === 0) {
+                let group = document.createElement("div");
+                group.className = "circle-group";
+                let circle = document.createElement("div");
+                circle.className = "fraction-circle";
+                circle.style.gridTemplateColumns = `repeat(${Math.min(d,6)},1fr)`;
+                circle.style.gridTemplateRows = `repeat(${Math.ceil(d/6)},1fr)`;
+                for (let i = 0; i < d; i++) {
+                    let piece = document.createElement("div");
+                    piece.className = "circle-piece";
+                    circle.appendChild(piece);
+                }
+                group.appendChild(circle);
+                let label = document.createElement("div");
+                label.className = "circle-group-label";
+                label.textContent = "0 / " + d + " — zero";
+                group.appendChild(label);
+                area.appendChild(group);
+            } else {
+                // Full circles
+                for (let w = 0; w < whole; w++) {
+                    let group = document.createElement("div");
+                    group.className = "circle-group";
+                    let circle = document.createElement("div");
+                    circle.className = "fraction-circle";
+                    let cols = Math.min(d, 6);
+                    let rows = Math.ceil(d / 6);
+                    circle.style.gridTemplateColumns = `repeat(${cols},1fr)`;
+                    circle.style.gridTemplateRows = `repeat(${rows},1fr)`;
+                    for (let i = 0; i < d; i++) {
+                        let piece = document.createElement("div");
+                        piece.className = "circle-piece filled";
+                        circle.appendChild(piece);
+                    }
+                    group.appendChild(circle);
+                    let label = document.createElement("div");
+                    label.className = "circle-group-label";
+                    label.textContent = (w + 1) + " whole" + (w > 0 ? "s" : "");
+                    group.appendChild(label);
+                    area.appendChild(group);
+                }
+
+                // Partial circle
+                if (rem > 0) {
+                    let group = document.createElement("div");
+                    group.className = "circle-group";
+                    let circle = document.createElement("div");
+                    circle.className = "fraction-circle";
+                    let cols = Math.min(d, 6);
+                    let rows = Math.ceil(d / 6);
+                    circle.style.gridTemplateColumns = `repeat(${cols},1fr)`;
+                    circle.style.gridTemplateRows = `repeat(${rows},1fr)`;
+                    for (let i = 0; i < d; i++) {
+                        let piece = document.createElement("div");
+                        piece.className = "circle-piece" + (i < rem ? " filled" : "");
+                        circle.appendChild(piece);
+                    }
+                    group.appendChild(circle);
+                    let label = document.createElement("div");
+                    label.className = "circle-group-label";
+                    label.textContent = rem + " / " + d + (whole > 0 ? " (remainder)" : "");
+                    group.appendChild(label);
+                    area.appendChild(group);
+                }
+            }
+
+            // ─── RESULT ───
+            let value = n / d;
+            let type = n < d ? "Proper fraction" : n === d ? "One whole" : "Improper fraction";
+
+            let mixed = "";
+            if (n >= d && d > 0) {
+                let w = Math.floor(n / d);
+                let r = n % d;
+                if (r > 0) {
+                    mixed = ` = ${w} ${r}/${d}`;
+                } else {
+                    mixed = ` = ${w}`;
+                }
+            }
+
+            document.getElementById("explorerResult").innerHTML = `
+                <strong>${n}/${d}</strong> means <strong>${n}</strong> out of <strong>${d}</strong> equal parts.
+                <br><br>
+                Decimal value: <span class="highlight">${value.toFixed(3)}</span>
+                <br>
+                Type: <span class="highlight">${type}</span>
+                ${mixed ? '<br>Mixed number: <span class="highlight">' + mixed + '</span>' : ''}
+            `;
         }
 
-        else{
-
-            setTimeout(
-                ()=>{
-
-                    selectedCards.forEach(
-                        item=>{
-
-                            item.button.classList.remove(
-                                "wrong"
-                            );
-
-                        }
-                    );
-
-                    selectedCards=[];
-
-                },
-                700
-            );
-
+        /* =========================================================
+           TYPE DETECTOR
+        ========================================================= */
+        function detectType() {
+            let n = Number(document.getElementById("typeN").value);
+            let d = Number(document.getElementById("typeD").value);
+            if (d <= 0) return;
+            let type = n < d ? "Proper Fraction" : n === d ? "Fraction equal to one" : "Improper Fraction";
+            document.getElementById("typeResult").innerHTML = `
+                ${fractionHTML(n,d)}
+                <br>
+                <span class="highlight">${type}</span>
+                <br><br>
+                Decimal value: ${(n/d).toFixed(3)}
+            `;
         }
 
-    }
-
-}
-
-
-/* =========================================================
-   QUIZ
-========================================================= */
-
-const answers={
-
-    q1:"A",
-    q2:"B",
-    q3:"C",
-    q4:"C",
-    q5:"B",
-    q6:"B",
-    q7:"A",
-    q8:"B",
-    q9:"C",
-    q10:"B",
-    q11:"A",
-    q12:"A",
-    q13:"C",
-    q14:"C",
-    q15:"C"
-
-};
-
-
-function updateQuizProgress(){
-
-    let answered=0;
-
-
-    for(
-        let i=1;
-        i<=15;
-        i++
-    ){
-
-        if(
-            document.querySelector(
-                `input[name="q${i}"]:checked`
-            )
-        ){
-
-            answered++;
-
+        /* =========================================================
+           MIXED NUMBER
+        ========================================================= */
+        function mixedConvert() {
+            let whole = Number(document.getElementById("mixedWhole").value);
+            let n = Number(document.getElementById("mixedN").value);
+            let d = Number(document.getElementById("mixedD").value);
+            let result = whole * d + n;
+            document.getElementById("mixedResult").innerHTML = `
+                ${whole} ${fractionHTML(n,d)} = ${fractionHTML(result,d)}
+                <br><br>
+                Formula: (${whole} × ${d}) + ${n} = <strong>${result}</strong>
+            `;
         }
 
-    }
+        /* =========================================================
+           EQUIVALENT FRACTIONS
+        ========================================================= */
+        function generateEquivalent() {
+            let n = Number(document.getElementById("eqN").value);
+            let d = Number(document.getElementById("eqD").value);
+            let m = Number(document.getElementById("multiplier").value);
+            let newN = n * m;
+            let newD = d * m;
 
+            document.getElementById("equivalentDisplay").innerHTML = `
+                ${fractionHTML(n,d)}
+                <span class="equals">=</span>
+                ${fractionHTML(newN,newD)}
+            `;
 
-    let percentage =
-        answered/15*100;
+            let bar = document.getElementById("equivalentVisual");
+            bar.innerHTML = "";
+            let parts = Math.min(newD, 24);
+            let row = document.createElement("div");
+            row.className = "bar-row";
+            for (let i = 0; i < parts; i++) {
+                let piece = document.createElement("div");
+                piece.className = "bar-piece" + (i < Math.round(newN / newD * parts) ? " filled" : "");
+                row.appendChild(piece);
+            }
+            bar.appendChild(row);
 
-
-    document.getElementById(
-        "quizProgress"
-    ).style.width =
-        percentage+"%";
-
-
-    document.getElementById(
-        "liveScore"
-    ).textContent =
-        answered;
-
-}
-
-
-document
-.querySelectorAll(
-    '#quizForm input[type="radio"]'
-)
-.forEach(
-    input => {
-
-        input.addEventListener(
-            "change",
-            updateQuizProgress
-        );
-
-    }
-);
-
-
-function checkQuiz(){
-
-    let score=0;
-
-    let unanswered=0;
-
-
-    for(
-        let i=1;
-        i<=15;
-        i++
-    ){
-
-        let selected =
-            document.querySelector(
-                `input[name="q${i}"]:checked`
-            );
-
-
-        let feedback =
-            document.getElementById(
-                "feedback"+i
-            );
-
-
-        if(!selected){
-
-            unanswered++;
-
-            feedback.innerHTML =
-                "⚠️ Please answer this question.";
-
-            feedback.className =
-                "quiz-feedback wrong-answer";
-
-            continue;
-
+            document.getElementById("equivalentResult").innerHTML = `
+                Multiply numerator and denominator by <strong>${m}</strong>.
+                <br><br>
+                ${n} × ${m} = ${newN}
+                <br>
+                ${d} × ${m} = ${newD}
+                <br><br>
+                Both fractions have the same value: <strong>${(n/d).toFixed(3)}</strong>
+            `;
         }
 
+        /* =========================================================
+           COMPARE
+        ========================================================= */
+        function compare() {
+            let n1 = Number(document.getElementById("cmpN1").value);
+            let d1 = Number(document.getElementById("cmpD1").value);
+            let n2 = Number(document.getElementById("cmpN2").value);
+            let d2 = Number(document.getElementById("cmpD2").value);
+            let v1 = n1 / d1,
+                v2 = n2 / d2;
+            let symbol = v1 > v2 ? ">" : v1 < v2 ? "<" : "=";
 
-        if(
-            selected.value===
-            answers["q"+i]
-        ){
+            document.getElementById("compareResult").innerHTML = `
+                ${fractionHTML(n1,d1)} <span class="highlight">${symbol}</span> ${fractionHTML(n2,d2)}
+                <br><br>
+                ${v1.toFixed(3)} ${symbol} ${v2.toFixed(3)}
+            `;
 
-            score++;
-
-
-            feedback.innerHTML =
-                "✅ Correct!";
-
-            feedback.className =
-                "quiz-feedback correct-answer";
-
+            document.getElementById("compareVisual").innerHTML = `
+                <div class="compare-box">
+                    ${fractionHTML(n1,d1)}
+                    <div class="fraction-bar" style="height:35px;padding:4px;" id="barA"></div>
+                </div>
+                <div class="compare-symbol">${symbol}</div>
+                <div class="compare-box">
+                    ${fractionHTML(n2,d2)}
+                    <div class="fraction-bar" style="height:35px;padding:4px;" id="barB"></div>
+                </div>
+            `;
+            createCompareBar("barA", n1, d1);
+            createCompareBar("barB", n2, d2);
         }
 
-        else{
-
-            feedback.innerHTML =
-                "❌ Incorrect. Try reviewing the notes.";
-
-            feedback.className =
-                "quiz-feedback wrong-answer";
-
+        function createCompareBar(id, n, d) {
+            let bar = document.getElementById(id);
+            bar.innerHTML = "";
+            let row = document.createElement("div");
+            row.className = "bar-row";
+            row.style.height = "28px";
+            for (let i = 0; i < d; i++) {
+                let piece = document.createElement("div");
+                piece.className = "bar-piece" + (i < n ? " filled" : "");
+                row.appendChild(piece);
+            }
+            bar.appendChild(row);
         }
 
-    }
+        /* =========================================================
+           NUMBER LINE
+        ========================================================= */
+        function drawLine() {
+            let n = Number(document.getElementById("lineN").value);
+            let d = Number(document.getElementById("lineD").value);
+            if (d <= 0 || n < 0 || n > d) return;
 
+            let line = document.getElementById("numberLine");
+            line.innerHTML = "";
 
-    if(unanswered>0){
+            for (let i = 0; i <= d; i++) {
+                let position = 5 + (i / d) * 90;
+                line.innerHTML += `
+                    <div class="tick" style="left:${position}%"></div>
+                    <div class="tick-label" style="left:${position}%">${i}/${d}</div>
+                `;
+            }
 
-        document.getElementById(
-            "finalScore"
-        ).style.display="block";
-
-
-        document.getElementById(
-            "finalScore"
-        ).innerHTML = `
-
-            <h2>
-                ⚠️ Almost there!
-            </h2>
-
-            <p>
-                Please answer all 15 questions.
-            </p>
-
-        `;
-
-        return;
-
-    }
-
-
-    let percentage =
-        Math.round(
-            score/15*100
-        );
-
-
-    let message;
-
-
-    if(score>=13){
-
-        message=
-        "🌟 Outstanding! You are a Fraction Champion!";
-
-        celebrate();
-
-    }
-
-    else if(score>=10){
-
-        message=
-        "👏 Great work! You understand most fraction concepts.";
-
-    }
-
-    else if(score>=7){
-
-        message=
-        "👍 Good start! Review the notes and practise again.";
-
-    }
-
-    else{
-
-        message=
-        "💪 Keep practising! Use the interactive activities before trying again.";
-
-    }
-
-
-    let final =
-        document.getElementById(
-            "finalScore"
-        );
-
-
-    final.style.display="block";
-
-
-    final.innerHTML = `
-
-        <h2>
-            🏆 Your Final Score
-        </h2>
-
-        <div class="score-number">
-            ${score}/15
-        </div>
-
-        <h3>
-            ${percentage}%
-        </h3>
-
-        <p>
-            ${message}
-        </p>
-
-    `;
-
-
-    final.scrollIntoView({
-        behavior:"smooth",
-        block:"center"
-    });
-
-}
-
-
-function resetQuiz(){
-
-    document
-    .getElementById(
-        "quizForm"
-    )
-    .reset();
-
-
-    document
-    .querySelectorAll(
-        ".quiz-feedback"
-    )
-    .forEach(
-        f=>{
-            f.innerHTML="";
+            let marker = 5 + (n / d) * 90;
+            line.innerHTML += `<div class="number-marker" style="left:${marker}%"></div>`;
         }
-    );
 
+        /* =========================================================
+           OPERATIONS
+        ========================================================= */
+        function calculateOperation() {
+            let n1 = Number(document.getElementById("opN1").value);
+            let d1 = Number(document.getElementById("opD1").value);
+            let n2 = Number(document.getElementById("opN2").value);
+            let d2 = Number(document.getElementById("opD2").value);
+            let op = document.getElementById("op").value;
 
-    document.getElementById(
-        "finalScore"
-    ).style.display="none";
+            if (d1 !== d2) {
+                document.getElementById("operationResult").innerHTML =
+                    "⚠️ Please use the same denominator for this activity.<br><br>Example: 2/7 + 3/7";
+                return;
+            }
 
+            let result = op === "+" ? n1 + n2 : n1 - n2;
+            document.getElementById("operationResult").innerHTML = `
+                ${fractionHTML(n1,d1)} <strong>${op}</strong> ${fractionHTML(n2,d2)} = ${fractionHTML(result,d1)}
+                <br><br> Decimal: ${(result/d1).toFixed(3)}
+            `;
 
-    document.getElementById(
-        "quizProgress"
-    ).style.width="0%";
+            let bar = document.getElementById("operationBar");
+            bar.innerHTML = "";
+            let row = document.createElement("div");
+            row.className = "bar-row";
+            let absResult = Math.abs(result);
+            for (let i = 0; i < d1; i++) {
+                let piece = document.createElement("div");
+                piece.className = "bar-piece" + (i < absResult ? " filled" : "");
+                row.appendChild(piece);
+            }
+            bar.appendChild(row);
+        }
 
+        /* =========================================================
+           MATCHING GAME
+        ========================================================= */
+        const gamePairs = [
+            ["1/2", "2/4"],
+            ["1/3", "2/6"],
+            ["3/4", "6/8"],
+            ["2/5", "4/10"]
+        ];
+        let gameCards = [];
+        let selectedCards = [];
+        let matchedPairs = 0;
 
-    document.getElementById(
-        "liveScore"
-    ).textContent="0";
+        function startGame() {
+            gameCards = [];
+            gamePairs.forEach(pair => {
+                gameCards.push({ value: pair[0], pair: pair[0] });
+                gameCards.push({ value: pair[1], pair: pair[0] });
+            });
+            gameCards.sort(() => Math.random() - .5);
 
-}
+            let grid = document.getElementById("matchGrid");
+            grid.innerHTML = "";
+            selectedCards = [];
+            matchedPairs = 0;
 
+            gameCards.forEach((card, index) => {
+                let button = document.createElement("button");
+                button.className = "match-card";
+                button.textContent = card.value;
+                button.dataset.pair = card.pair;
+                button.onclick = () => selectCard(button, index);
+                grid.appendChild(button);
+            });
+        }
 
-/* =========================================================
-   CELEBRATION
-========================================================= */
+        function selectCard(button, index) {
+            if (button.classList.contains("correct") || selectedCards.length >= 2) return;
+            button.classList.add("wrong");
+            selectedCards.push({ button, pair: button.dataset.pair });
 
-function celebrate(){
+            if (selectedCards.length === 2) {
+                if (selectedCards[0].pair === selectedCards[1].pair) {
+                    selectedCards.forEach(item => {
+                        item.button.classList.remove("wrong");
+                        item.button.classList.add("correct");
+                    });
+                    matchedPairs++;
+                    document.getElementById("gameMessage").innerHTML = `🎉 Excellent! ${matchedPairs}/4 pairs matched.`;
+                    selectedCards = [];
+                    if (matchedPairs === 4) {
+                        document.getElementById("gameMessage").innerHTML = "🏆 Amazing! You matched all the equivalent fractions!";
+                        celebrate();
+                    }
+                } else {
+                    setTimeout(() => {
+                        selectedCards.forEach(item => item.button.classList.remove("wrong"));
+                        selectedCards = [];
+                    }, 700);
+                }
+            }
+        }
 
-    const symbols=[
-        "⭐",
-        "🎉",
-        "✨",
-        "🌟",
-        "💜",
-        "💙"
-    ];
+        /* =========================================================
+           QUIZ
+        ========================================================= */
+        const answers = {
+            q1: "A",
+            q2: "B",
+            q3: "C",
+            q4: "C",
+            q5: "B",
+            q6: "B",
+            q7: "A",
+            q8: "B",
+            q9: "C",
+            q10: "B",
+            q11: "A",
+            q12: "A",
+            q13: "C",
+            q14: "C",
+            q15: "C"
+        };
 
+        function updateQuizProgress() {
+            let answered = 0;
+            for (let i = 1; i <= 15; i++) {
+                if (document.querySelector(`input[name="q${i}"]:checked`)) answered++;
+            }
+            document.getElementById("quizProgress").style.width = (answered / 15 * 100) + "%";
+            document.getElementById("liveScore").textContent = answered;
+        }
 
-    for(
-        let i=0;
-        i<60;
-        i++
-    ){
+        document.querySelectorAll('#quizForm input[type="radio"]').forEach(input => {
+            input.addEventListener("change", updateQuizProgress);
+        });
 
-        let piece =
-            document.createElement(
-                "div"
-            );
+        function checkQuiz() {
+            let score = 0,
+                unanswered = 0;
+            for (let i = 1; i <= 15; i++) {
+                let selected = document.querySelector(`input[name="q${i}"]:checked`);
+                let feedback = document.getElementById("feedback" + i);
+                if (!selected) {
+                    unanswered++;
+                    feedback.innerHTML = "⚠️ Please answer this question.";
+                    feedback.className = "quiz-feedback wrong-answer";
+                    continue;
+                }
+                if (selected.value === answers["q" + i]) {
+                    score++;
+                    feedback.innerHTML = "✅ Correct!";
+                    feedback.className = "quiz-feedback correct-answer";
+                } else {
+                    feedback.innerHTML = "❌ Incorrect. Try reviewing the notes.";
+                    feedback.className = "quiz-feedback wrong-answer";
+                }
+            }
 
+            if (unanswered > 0) {
+                document.getElementById("finalScore").style.display = "block";
+                document.getElementById("finalScore").innerHTML =
+                    `<h2>⚠️ Almost there!</h2><p>Please answer all 15 questions.</p>`;
+                return;
+            }
 
-        piece.className=
-            "confetti";
+            let percentage = Math.round(score / 15 * 100);
+            let message = score >= 13 ? "🌟 Outstanding! You are a Fraction Champion!" :
+                score >= 10 ? "👏 Great work! You understand most fraction concepts." :
+                score >= 7 ? "👍 Good start! Review the notes and practise again." :
+                "💪 Keep practising! Use the interactive activities before trying again.";
 
+            if (score >= 13) celebrate();
 
-        piece.textContent =
-            symbols[
-                Math.floor(
-                    Math.random()*
-                    symbols.length
-                )
-            ];
+            let final = document.getElementById("finalScore");
+            final.style.display = "block";
+            final.innerHTML = `
+                <h2>🏆 Your Final Score</h2>
+                <div class="score-number">${score}/15</div>
+                <h3>${percentage}%</h3>
+                <p>${message}</p>
+            `;
+            final.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
 
+        function resetQuiz() {
+            document.getElementById("quizForm").reset();
+            document.querySelectorAll(".quiz-feedback").forEach(f => f.innerHTML = "");
+            document.getElementById("finalScore").style.display = "none";
+            document.getElementById("quizProgress").style.width = "0%";
+            document.getElementById("liveScore").textContent = "0";
+        }
 
-        piece.style.left =
-            Math.random()*100+
-            "%";
+        /* =========================================================
+           CELEBRATION
+        ========================================================= */
+        function celebrate() {
+            const symbols = ["⭐", "🎉", "✨", "🌟", "💜", "💙"];
+            for (let i = 0; i < 60; i++) {
+                let piece = document.createElement("div");
+                piece.className = "confetti";
+                piece.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                piece.style.left = Math.random() * 100 + "%";
+                piece.style.animationDelay = Math.random() * 1.5 + "s";
+                piece.style.fontSize = 12 + Math.random() * 20 + "px";
+                document.body.appendChild(piece);
+                setTimeout(() => piece.remove(), 4500);
+            }
+        }
 
-
-        piece.style.animationDelay =
-            Math.random()*1.5+
-            "s";
-
-
-        piece.style.fontSize =
-            12+
-            Math.random()*20+
-            "px";
-
-
-        document.body.appendChild(
-            piece
-        );
-
-
-        setTimeout(
-            ()=>{
-                piece.remove();
-            },
-            4500
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   INITIALISE
-========================================================= */
-
-updateExplorer();
-
-generateEquivalent();
-
-compare();
-
-drawLine();
-
-calculateOperation();
-
-startGame();
-
-
-</script>
-
+        /* =========================================================
+           INITIALISE
+        ========================================================= */
+        updateExplorer();
+        generateEquivalent();
+        compare();
+        drawLine();
+        calculateOperation();
+        startGame();
+    </script>
 
 </body>
 
